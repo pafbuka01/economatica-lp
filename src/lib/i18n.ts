@@ -33,7 +33,7 @@ export const dict = {
       p1_desc: 'Redação focada em mercado financeiro com jornalistas veteranos cobrindo em tempo real tudo o que move preço de ativos. Antes e melhor que qualquer fonte pública.',
       p1_bullets: [ 'Principais eventos diários do mercado brasileiro', 'Mais de 80 indicadores econômicos do Brasil e do G7 assim que divulgados', 'Fatos corporativos: resultados, M&A, follow-ons, ratings, guidance', 'Eventos políticos com impacto direto sobre ativos', 'Notícias urgentes: alertas de alto impacto em segundos', 'Contexto editorial de analistas, não apenas agregação de fontes' ],
       p1_badge_lbl: 'Equipe',
-      p1_badge: 'Jornalistas financeiros do Mover Economatica · 40+ anos de mercado',
+      p1_badge: 'Redacao Mover, parte da Economatica. 40+ anos entregando inteligencia financeira para as maiores instituicoes do Brasil.',
       breaking: 'URGENT',
       stats: [
         { n: '180+', l: 'Manchetes/dia' },
@@ -175,7 +175,7 @@ export const dict = {
       p1_desc: 'A newsroom focused on financial markets with veteran journalists covering, in real time, everything that moves asset prices. Earlier and more accurately than any public source.',
       p1_bullets: ['Major daily events across the Brazilian market','80+ Brazil + G7 macro indicators the moment they print','Corporate facts: earnings, M&A, follow-ons, ratings, guidance','Political events with direct impact on assets','Breaking news: high-impact alerts within seconds','Analyst-grade editorial context, not just aggregation'],
       p1_badge_lbl: 'Team',
-      p1_badge: 'Mover Economatica financial journalists · 40+ years of markets',
+      p1_badge: 'Mover newsroom, part of Economatica. 40+ years delivering financial intelligence to Brazil's largest institutions.',
       breaking: 'URGENT',
       stats: [
         { n: '180+', l: 'Headlines/day' },
@@ -317,7 +317,7 @@ export const dict = {
       p1_desc: 'Redacción enfocada en mercados financieros con periodistas veteranos cubriendo en tiempo real todo lo que mueve el precio de los activos. Antes y mejor que cualquier fuente pública.',
       p1_bullets: ['Principales eventos diarios del mercado brasileño','Más de 80 indicadores macro de Brasil y G7 apenas se publican','Hechos corporativos: resultados, M&A, follow-ons, ratings, guidance','Eventos políticos con impacto directo sobre los activos','Noticias urgentes: alertas de alto impacto en segundos','Contexto editorial de analistas, no solo agregación'],
       p1_badge_lbl: 'Equipo',
-      p1_badge: 'Periodistas financieros del Mover Economatica · 40+ años de mercado',
+      p1_badge: 'Redaccion Mover, parte de Economatica. 40+ anos entregando inteligencia financiera a las mayores instituciones de Brasil.',
       breaking: 'URGENTE',
       stats: [
         { n: '180+', l: 'Titulares/día' },
