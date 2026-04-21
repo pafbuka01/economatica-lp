@@ -26,6 +26,14 @@ function formatNumber(val: string): string {
   return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
+function formatBrazilPhone(val: string): string {
+  const digits = val.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 const USAGE_LABELS: Record<string, Record<UsageType, string>> = {
   pt: { '': '', internal: 'Interno', b2b: 'B2B', b2b2c: 'B2B2C' },
   en: { '': '', internal: 'Internal', b2b: 'B2B', b2b2c: 'B2B2C' },
@@ -58,9 +66,11 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [usageType, setUsageType] = useState<UsageType>('');
   const [estUsers, setEstUsers] = useState('');
+  const [phone, setPhone] = useState('');
 
   const loc = LABELS[locale] || LABELS.pt;
   const usageLabels = USAGE_LABELS[locale] || USAGE_LABELS.pt;
+  const isPtBr = locale === 'pt' || locale === 'pt-BR';
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,6 +78,7 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
     const data = Object.fromEntries(fd.entries()) as Record<string, string>;
     data.usage_type = usageType;
     if (estUsers) data.estimated_users = estUsers.replace(/\D/g, '');
+    if (isPtBr) data.phone = phone.replace(/\D/g, '');
 
     const errs: Record<string, string> = {};
     if (!data.name?.trim()) errs.name = 'required';
@@ -158,7 +169,13 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
             </div>
             <div>
               <label className="form-label">{t.phone}</label>
-              <input name="phone" type="tel" className="form-input" />
+              <input
+                name="phone"
+                type="tel"
+                className="form-input"
+                value={isPtBr ? phone : undefined}
+                onChange={isPtBr ? (e) => setPhone(formatBrazilPhone(e.target.value)) : undefined}
+              />
             </div>
           </div>
         )}
@@ -179,7 +196,13 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
             </div>
             <div>
               <label className="form-label">{t.phone}</label>
-              <input name="phone" type="tel" className="form-input" />
+              <input
+                name="phone"
+                type="tel"
+                className="form-input"
+                value={isPtBr ? phone : undefined}
+                onChange={isPtBr ? (e) => setPhone(formatBrazilPhone(e.target.value)) : undefined}
+              />
             </div>
           </div>
         )}
@@ -189,7 +212,13 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
           <div className="form-row two">
             <div>
               <label className="form-label">{t.phone}</label>
-              <input name="phone" type="tel" className="form-input" />
+              <input
+                name="phone"
+                type="tel"
+                className="form-input"
+                value={isPtBr ? phone : undefined}
+                onChange={isPtBr ? (e) => setPhone(formatBrazilPhone(e.target.value)) : undefined}
+              />
             </div>
             <div />
           </div>
