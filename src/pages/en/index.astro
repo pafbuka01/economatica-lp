@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import Coverage from '../../components/Coverage.astro';
+import Features from '../../components/Features.astro';
+import Examples from '../../components/Examples.astro';
+import UseCases from '../../components/UseCases.astro';
+import Compare from '../../components/Compare.astro';
+import FAQ from '../../components/FAQ.astro';
+import Footer from '../../components/Footer.astro';
+import Playground from '../../components/islands/Playground';
+import ContactForm from '../../components/islands/ContactForm';
+import { dict } from '../../lib/i18n';
+
+const t = dict.en;
+const lang = 'en';
+---
+<BaseLayout lang={lang} title="Eco News API — Economatica" description="Real-time proprietary coverage from the Mover Economatica newsroom via API. Structured for institutional systems, fintechs and B2B2C products.">
+  <Nav t={t} lang={lang} />
+  <Hero t={t} />
+  <TrustBar t={t} />
+
+  <section id="playground">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">{t.playground.eyebrow}</div>
+        <h2 style="margin-top:16px;">{t.playground.h2}</h2>
+        <p>{t.playground.sub}</p>
+      </div>
+      <div class="pg">
+        <Playground client:visible t={t.playground} />
+      </div>
+    </div>
+  </section>
+
+  <Coverage t={t} />
+  <Features t={t} />
+  <Examples t={t} />
+  <UseCases t={t} />
+  <Compare t={t} />
+  <FAQ t={t} />
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">{t.contact.eyebrow}</div>
+        <h2 style="margin-top:16px;">{t.contact.h2}</h2>
+        <p style="font-size:17px;margin-top:16px;">{t.contact.sub}</p>
+      </div>
+      <ContactForm client:visible t={t.contact} locale="en" />
+    </div>
+  </section>
+
+  <Footer t={t} />
+</BaseLayout>

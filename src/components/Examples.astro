@@ -1,0 +1,77 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const E = t.examples;
+---
+<section id="docs">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">{E.eyebrow}</div>
+      <h2 style="margin-top:16px;">{E.h2}</h2>
+      <p>{E.sub}</p>
+    </div>
+
+    <div class="code" id="examples-code">
+      <div class="code-head">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-file" id="examples-filename">client.js</span>
+        </div>
+        <div class="lang-tabs">
+          <button class="lang-tab active" data-lang="js" data-file="client.js">Node</button>
+          <button class="lang-tab" data-lang="curl" data-file="request.sh">cURL</button>
+          <button class="lang-tab" data-lang="python" data-file="stream.py">Python</button>
+          <button class="lang-tab" data-lang="go" data-file="main.go">Go</button>
+        </div>
+      </div>
+      <div class="code-body">
+        <pre id="examples-pre" set:html={`<span class="tok-kw">import</span> { EcoNews } <span class="tok-kw">from</span> <span class="tok-str">"@economatica/econews"</span>;
+
+<span class="tok-kw">const</span> eco = <span class="tok-kw">new</span> <span class="tok-fn">EcoNews</span>({ <span class="tok-key">apiKey</span>: process.env.<span class="tok-str">ECO_API_KEY</span> });
+
+<span class="tok-cmt">// Last 24h of corporate events across covered tickers</span>
+<span class="tok-kw">const</span> events = <span class="tok-kw">await</span> eco.articles.<span class="tok-fn">list</span>({
+  <span class="tok-key">themes</span>: [<span class="tok-str">"m&amp;a"</span>, <span class="tok-str">"cvm44"</span>],
+  <span class="tok-key">from</span>: <span class="tok-str">"2026-04-19T00:00:00Z"</span>,
+  <span class="tok-key">limit</span>: <span class="tok-num">200</span>,
+});
+
+events.<span class="tok-fn">forEach</span>((e) =&gt; <span class="tok-fn">upsert</span>(e.id, e));`}></pre>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap;align-items:center;">
+      <a href="#docs" class="btn btn-ghost">{t.footer.docsCta}</a>
+      <span class="mono" style="font-size:12px;color:var(--fg-subtle);">
+        SDKs: Node &middot; Python &middot; Go &middot; Java &middot; .NET
+      </span>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+(function() {
+  var codeSnippets = {
+    js: '<span class="tok-kw">import</span> { EcoNews } <span class="tok-kw">from</span> <span class="tok-str">"@economatica/econews"</span>;\n\n<span class="tok-kw">const</span> eco = <span class="tok-kw">new</span> <span class="tok-fn">EcoNews</span>({ <span class="tok-key">apiKey</span>: process.env.<span class="tok-str">ECO_API_KEY</span> });\n\n<span class="tok-cmt">// Last 24h of corporate events across covered tickers</span>\n<span class="tok-kw">const</span> events = <span class="tok-kw">await</span> eco.articles.<span class="tok-fn">list</span>({\n  <span class="tok-key">themes</span>: [<span class="tok-str">"m&amp;a"</span>, <span class="tok-str">"cvm44"</span>],\n  <span class="tok-key">from</span>: <span class="tok-str">"2026-04-19T00:00:00Z"</span>,\n  <span class="tok-key">limit</span>: <span class="tok-num">200</span>,\n});\n\nevents.<span class="tok-fn">forEach</span>((e) =&gt; <span class="tok-fn">upsert</span>(e.id, e));',
+    curl: '<span class="tok-cmt"># Fetch latest high-relevance articles for PETR4</span>\n<span class="tok-kw">curl</span> -X GET <span class="tok-str">"https://api.econews.economatica.com/v1/articles"</span> \\\n  -H <span class="tok-str">"Authorization: Bearer $ECO_API_KEY"</span> \\\n  -G \\\n  --data-urlencode <span class="tok-str">"tickers=PETR4"</span> \\\n  --data-urlencode <span class="tok-str">"min_relevance=0.7"</span> \\\n  --data-urlencode <span class="tok-str">"limit=50"</span>',
+    python: '<span class="tok-kw">from</span> econews <span class="tok-kw">import</span> Client\n\nclient = <span class="tok-fn">Client</span>(api_key=os.environ[<span class="tok-str">"ECO_API_KEY"</span>])\n\n<span class="tok-cmt"># Stream events filtered by sector + sentiment</span>\n<span class="tok-kw">for</span> event <span class="tok-kw">in</span> client.<span class="tok-fn">stream</span>(sectors=[<span class="tok-str">"Financeiro"</span>], sentiment=<span class="tok-str">"neg"</span>):\n    <span class="tok-fn">print</span>(event.ticker, event.headline, event.sentiment.score)\n    <span class="tok-kw">if</span> event.theme == <span class="tok-str">"cvm44"</span>:\n        <span class="tok-fn">notify_desk</span>(event)',
+    go: '<span class="tok-kw">package</span> main\n\n<span class="tok-kw">import</span> <span class="tok-str">"github.com/economatica/econews-go"</span>\n\n<span class="tok-kw">func</span> <span class="tok-fn">main</span>() {\n    c := econews.<span class="tok-fn">NewClient</span>(os.<span class="tok-fn">Getenv</span>(<span class="tok-str">"ECO_API_KEY"</span>))\n    stream, _ := c.<span class="tok-fn">Stream</span>(econews.Filter{\n        Tickers:      []<span class="tok-kw">string</span>{<span class="tok-str">"VALE3"</span>,<span class="tok-str">"PETR4"</span>},\n        MinRelevance: <span class="tok-num">0.75</span>,\n    })\n    <span class="tok-kw">for</span> ev := <span class="tok-kw">range</span> stream.C {\n        fmt.<span class="tok-fn">Println</span>(ev.Ticker, ev.Headline, ev.Sentiment.Score)\n    }\n}'
+  };
+
+  var tabs = document.querySelectorAll('.lang-tab');
+  var pre = document.getElementById('examples-pre');
+  var filename = document.getElementById('examples-filename');
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var lang = tab.getAttribute('data-lang');
+      var file = tab.getAttribute('data-file');
+      if (pre && codeSnippets[lang]) pre.innerHTML = codeSnippets[lang];
+      if (filename) filename.textContent = file;
+    });
+  });
+})();
+</script>

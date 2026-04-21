@@ -1,0 +1,23 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const U = t.usecases;
+---
+<section id="usecases">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">{U.eyebrow}</div>
+      <h2 style="margin-top:16px;">{U.h2}</h2>
+    </div>
+    <div class="grid-2">
+      {U.items.map((it) => (
+        <div class="feat-card" style="padding:32px;">
+          <span class="chip mono" style="align-self:flex-start;">{it.tag}</span>
+          <h3 style="margin-top:8px;font-size:24px;">{it.t}</h3>
+          <p style="font-size:15px;margin-top:8px;">{it.d}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

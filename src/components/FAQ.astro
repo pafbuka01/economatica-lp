@@ -1,0 +1,44 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const F = t.faq;
+---
+<section id="faq">
+  <div class="container" style="max-width:900px;">
+    <div class="section-head">
+      <div class="eyebrow">{F.eyebrow}</div>
+      <h2 style="margin-top:16px;">{F.h2}</h2>
+    </div>
+    {F.items.map((it, i) => (
+      <details class="faq-item" data-faq>
+        <summary class="faq-q">
+          <span>{it.q}</span>
+          <span class="faq-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="faq-a">{it.a}</div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  details.faq-item summary { list-style: none; }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding-top: 0;
+  }
+  details.faq-item[open] .faq-a {
+    max-height: 400px;
+    padding-top: 12px;
+  }
+  details.faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--accent);
+  }
+</style>

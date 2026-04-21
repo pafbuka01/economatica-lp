@@ -1,0 +1,83 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const h = t.hero;
+const codeHtml = `<span class="tok-kw">const</span> eco = <span class="tok-kw">new</span> <span class="tok-fn">EcoNews</span>({ <span class="tok-key">apiKey</span>: process.env.<span class="tok-str">ECO_KEY</span> });
+
+<span class="tok-cmt">// Subscribe to high-relevance events on PETR4</span>
+eco.<span class="tok-fn">stream</span>({
+  <span class="tok-key">tickers</span>: [<span class="tok-str">'PETR4'</span>, <span class="tok-str">'VALE3'</span>],
+  <span class="tok-key">minRelevance</span>: <span class="tok-num">0.75</span>,
+  <span class="tok-key">sentiment</span>: <span class="tok-str">'any'</span>,
+}).<span class="tok-fn">on</span>(<span class="tok-str">'message'</span>, (news) =&gt; {
+  console.<span class="tok-fn">log</span>(news.headline, news.sentiment.score);
+});`;
+---
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">{h.eyebrow}</div>
+      <h1 style="margin-top:18px;">
+        {h.h1_pre} <strong><em style="font-style:normal;">{h.h1_em}</em></strong><br/>
+        {h.h1_post}
+      </h1>
+      <p class="hero-sub">{h.sub}</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary btn-lg">{h.cta_sales}</a>
+        <a href="#docs" class="btn btn-ghost btn-lg">{h.cta_docs}</a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><span class="num">{h.m1_num}</span><span class="lbl">{h.m1_lbl}</span></div>
+        <div class="hero-meta-item"><span class="num">{h.m2_num}</span><span class="lbl">{h.m2_lbl}</span></div>
+        <div class="hero-meta-item"><span class="num">{h.m3_num}</span><span class="lbl">{h.m3_lbl}</span></div>
+        <div class="hero-meta-item"><span class="num">{h.m4_num}</span><span class="lbl">{h.m4_lbl}</span></div>
+      </div>
+    </div>
+
+    <div class="hero-viz">
+      <div class="code viz-code">
+        <div class="code-head">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-file">subscribe.js</span>
+          </div>
+          <span class="chip live" style="height:22px;font-size:10px;"><span class="chip-dot"></span>stream</span>
+        </div>
+        <div class="code-body">
+          <pre set:html={codeHtml}></pre>
+        </div>
+      </div>
+      <div class="viz-stream">
+        <div class="viz-stream-head">
+          <span class="eyebrow" style="font-size:10px;">Live feed</span>
+          <span class="mono" style="font-size:10px;color:var(--fg-subtle);">ws &middot; /v1/stream</span>
+        </div>
+        <div class="stream-item" style="animation-delay:0s;">
+          <div class="stream-meta">
+            <span class="ticker">PETR4</span>
+            <span>14:32:08</span>
+            <span class="sent-pos" style="margin-left:auto;">&#9679; +0.82</span>
+          </div>
+          <div class="stream-head">Petrobras aprova plano de investimento 2026&#8211;30 com CapEx de US$ 111 bi</div>
+        </div>
+        <div class="stream-item" style="animation-delay:0.1s;">
+          <div class="stream-meta">
+            <span class="ticker">VALE3</span>
+            <span>14:31:42</span>
+            <span class="sent-pos" style="margin-left:auto;">&#9679; +0.71</span>
+          </div>
+          <div class="stream-head">Vale divulga produ&ccedil;&atilde;o de min&eacute;rio de ferro acima do consenso no 1T26</div>
+        </div>
+        <div class="stream-item" style="animation-delay:0.2s;">
+          <div class="stream-meta">
+            <span class="ticker">ITUB4</span>
+            <span>14:30:19</span>
+            <span class="sent-neu" style="margin-left:auto;">&#9679; &plusmn;0.04</span>
+          </div>
+          <div class="stream-head">Ita&uacute; Unibanco: Banco Central aprova aumento de capital de subsidi&aacute;ria</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

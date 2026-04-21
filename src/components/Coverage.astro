@@ -1,0 +1,90 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const C = t.coverage;
+const feats = t.features.items;
+---
+<section id="coverage">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">{C.eyebrow}</div>
+      <h2 style="margin-top:16px;">{C.h2}</h2>
+      <p>{C.sub}</p>
+    </div>
+
+    <!-- Proprietary hero card -->
+    <div class="cov-hero">
+      <div class="cov-hero-left">
+        <span class="chip" style="align-self:flex-start;background:var(--accent);color:var(--accent-fg);border-color:var(--accent);">
+          <span class="chip-dot" style="background:var(--accent-fg);"></span>Proprietary
+        </span>
+        <h3 style="font-size:32px;letter-spacing:-0.03em;margin-top:16px;">{C.p1_title}</h3>
+        <p style="font-size:16px;margin-top:12px;max-width:520px;">{C.p1_desc}</p>
+        <ul class="bullet-list" style="margin-top:20px;">
+          {C.p1_bullets.map((b) => <li>{b}</li>)}
+        </ul>
+        {C.p1_badge && (
+          <div class="cov-badge">
+            <span class="mono" style="font-size:11px;color:var(--fg-subtle);text-transform:uppercase;letter-spacing:0.08em;">{C.p1_badge_lbl}</span>
+            <div style="font-size:14px;color:var(--fg);margin-top:6px;font-weight:500;">{C.p1_badge}</div>
+          </div>
+        )}
+      </div>
+      <div class="cov-hero-right">
+        <div class="cov-stat-grid">
+          {C.stats.map((s) => (
+            <div class="cov-stat">
+              <div class="cov-stat-num">{s.n}</div>
+              <div class="cov-stat-lbl">{s.l}</div>
+            </div>
+          ))}
+        </div>
+        <div class="cov-tick">
+          <div class="cov-tick-head">
+            <span class="chip live"><span class="chip-dot"></span>{C.breaking || 'URGENT'}</span>
+            <span class="mono" style="font-size:11px;color:var(--fg-subtle);">speed desk &middot; 06:32:11</span>
+          </div>
+          {C.samples.map((s) => (
+            <div class="cov-tick-item">
+              <span class="cov-tick-time mono">{s.t}</span>
+              <span class="cov-tick-tag">{s.tag}</span>
+              <span class="cov-tick-head-txt">{s.h}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Aggregation sub-block -->
+    <div class="cov-agg">
+      <div class="cov-agg-left">
+        <span class="chip"><span class="chip-dot"></span>Aggregation</span>
+        <h4 style="font-size:20px;margin-top:10px;letter-spacing:-0.02em;">{C.agg_title}</h4>
+        <p style="font-size:14px;margin-top:8px;max-width:520px;">{C.agg_desc}</p>
+      </div>
+      <div class="cov-agg-stats">
+        {C.agg_stats.map((s) => (
+          <div class="cov-agg-stat">
+            <div class="cov-stat-num" style="font-size:22px;">{s.n}</div>
+            <div class="cov-stat-lbl">{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CVM section -->
+    <div class="feat-big" style="grid-template-columns:1fr;margin-top:var(--gap);">
+      <div>
+        <div class="cov-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/></svg>
+        </div>
+        <h3 style="margin-top:16px;">{C.p2_title}</h3>
+        <p style="font-size:15px;margin-top:8px;max-width:680px;">{C.p2_desc}</p>
+        <ul class="bullet-list" style="column-count:2;column-gap:40px;">
+          {C.p2_bullets.map((b) => <li style="break-inside:avoid;">{b}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

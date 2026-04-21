@@ -1,0 +1,60 @@
+---
+// src/layouts/BaseLayout.astro
+// Root layout — <html> scaffold, fonts, theme bootstrap, global CSS.
+//
+// Usage:
+//   import BaseLayout from '../layouts/BaseLayout.astro';
+//   <BaseLayout lang="pt-BR" title="Eco News API" description="...">
+//     <Slot />
+//   </BaseLayout>
+
+import '../styles/global.css';
+
+interface Props {
+  lang: 'pt-BR' | 'en' | 'es';
+  title: string;
+  description: string;
+}
+
+const { lang, title, description } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={Astro.url.href} />
+
+    <!-- Alternates for SEO -->
+    <link rel="alternate" hreflang="pt-BR" href="https://econews.economatica.com/" />
+    <link rel="alternate" hreflang="en" href="https://econews.economatica.com/en" />
+    <link rel="alternate" hreflang="es" href="https://econews.economatica.com/es" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme bootstrap — no FOUC. Must run before paint. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'light';
+          var d = localStorage.getItem('density') || 'comfortable';
+          document.documentElement.setAttribute('data-theme', t);
+          document.documentElement.setAttribute('data-density', d);
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

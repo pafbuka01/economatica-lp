@@ -1,0 +1,16 @@
+---
+import type { Dict } from '../lib/i18n';
+interface Props { t: Dict; }
+const { t } = Astro.props;
+const logos = ['NORDEA-IM', 'ATLANTIC CAP', 'BRIDGE SEC', 'MOVER', 'QUANTA', 'LEDGERHOUSE'];
+---
+<div class="trust">
+  <div class="container">
+    <div class="trust-lbl">{t.trust}</div>
+    <div class="trust-row">
+      {logos.map((l) => (
+        <div class="logo-placeholder"><span class="mark"></span>{l}</div>
+      ))}
+    </div>
+  </div>
+</div>
