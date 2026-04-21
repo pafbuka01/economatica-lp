@@ -257,7 +257,7 @@ section:first-of-type { border-top: none; }
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
 }
-.hero h1 strong { color: var(--accent); font-weight: 700; font-style: normal; }
+.hero h1 strong { color: #00875a; font-weight: 700; font-style: normal; }
 .hero-sub { font-size: 20px; margin-top: 24px; max-width: 560px; }
 .hero-ctas { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
 .hero-meta {

@@ -8,20 +8,66 @@ type ContactDict = {
   submit: string; success: string;
   sidebarTitle: string;
   sidebarSteps: { t: string; d: string }[];
+  // new fields added via props
+  usage?: string;
+  usageOptions?: string[];
+  companySize?: string;
+  companySizes?: string[];
+  estimatedUsers?: string;
 };
 
+type UsageType = '' | 'internal' | 'b2b' | 'b2b2c';
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function formatNumber(val: string): string {
+  const digits = val.replace(/\D/g, '');
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+const USAGE_LABELS: Record<string, Record<UsageType, string>> = {
+  pt: { '': '', internal: 'Interno', b2b: 'B2B', b2b2c: 'B2B2C' },
+  en: { '': '', internal: 'Internal', b2b: 'B2B', b2b2c: 'B2B2C' },
+  es: { '': '', internal: 'Interno', b2b: 'B2B', b2b2c: 'B2B2C' },
+};
+
+const LABELS: Record<string, { usage: string; companySize: string; companySizes: string[]; estimatedUsers: string }> = {
+  pt: {
+    usage: 'Tipo de uso',
+    companySize: 'Tamanho da empresa',
+    companySizes: ['1\u201350', '50\u2013250', '250\u20131.000', '1.000+'],
+    estimatedUsers: 'Usuarios finais estimados',
+  },
+  en: {
+    usage: 'Usage type',
+    companySize: 'Company size',
+    companySizes: ['1\u201350', '50\u2013250', '250\u20131,000', '1,000+'],
+    estimatedUsers: 'Estimated end users',
+  },
+  es: {
+    usage: 'Tipo de uso',
+    companySize: 'Tamano de la empresa',
+    companySizes: ['1\u201350', '50\u2013250', '250\u20131.000', '1.000+'],
+    estimatedUsers: 'Usuarios finales estimados',
+  },
+};
+
 export default function ContactForm({ t, locale }: { t: ContactDict; locale: string }) {
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [usageType, setUsageType] = useState<UsageType>('');
+  const [estUsers, setEstUsers] = useState('');
+
+  const loc = LABELS[locale] || LABELS.pt;
+  const usageLabels = USAGE_LABELS[locale] || USAGE_LABELS.pt;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd.entries()) as Record<string, string>;
+    data.usage_type = usageType;
+    if (estUsers) data.estimated_users = estUsers.replace(/\D/g, '');
 
     const errs: Record<string, string> = {};
     if (!data.name?.trim()) errs.name = 'required';
@@ -56,6 +102,7 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
   return (
     <div className="contact-grid">
       <form className="form-card" onSubmit={onSubmit} noValidate>
+        {/* Row 1: Nome + Email */}
         <div className="form-row two">
           <div>
             <label className="form-label">Nome</label>
@@ -68,6 +115,8 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
             {errors.email && <em style={{ color: 'var(--red)', fontSize: 12 }}>{errors.email}</em>}
           </div>
         </div>
+
+        {/* Row 2: Empresa + Cargo */}
         <div className="form-row two">
           <div>
             <label className="form-label">{t.company}</label>
@@ -79,13 +128,23 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
             <input name="role" type="text" className="form-input" />
           </div>
         </div>
+
+        {/* Row 3: Tipo de uso + Segmento */}
         <div className="form-row two">
           <div>
-            <label className="form-label">{t.size}</label>
-            <select name="size" className="form-select" defaultValue="">
-              <option value="" disabled>&mdash;</option>
-              {t.sizes.map((o) => <option key={o} value={o}>{o}</option>)}
-            </select>
+            <label className="form-label">{loc.usage}</label>
+            <div className="segments">
+              {(['internal', 'b2b', 'b2b2c'] as UsageType[]).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  className={`segment ${usageType === opt ? 'active' : ''}`}
+                  onClick={() => setUsageType(usageType === opt ? '' : opt)}
+                >
+                  {usageLabels[opt]}
+                </button>
+              ))}
+            </div>
           </div>
           <div>
             <label className="form-label">{t.segment}</label>
@@ -95,23 +154,62 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
             </select>
           </div>
         </div>
-        <div className="form-row two">
-          <div>
-            <label className="form-label">{t.integration}</label>
-            <select name="integration" className="form-select" defaultValue="">
-              <option value="" disabled>&mdash;</option>
-              {t.integrations.map((o) => <option key={o} value={o}>{o}</option>)}
-            </select>
+
+        {/* Conditional row: Tamanho empresa (interno) OR Usuarios estimados (B2B/B2B2C) */}
+        {usageType === 'internal' && (
+          <div className="form-row two" style={{ animation: 'feedIn .3s ease both' }}>
+            <div>
+              <label className="form-label">{loc.companySize}</label>
+              <select name="company_size" className="form-select" defaultValue="">
+                <option value="" disabled>&mdash;</option>
+                {loc.companySizes.map((o) => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="form-label">{t.phone}</label>
+              <input name="phone" type="tel" className="form-input" />
+            </div>
           </div>
-          <div>
-            <label className="form-label">{t.phone}</label>
-            <input name="phone" type="tel" className="form-input" />
+        )}
+
+        {(usageType === 'b2b' || usageType === 'b2b2c') && (
+          <div className="form-row two" style={{ animation: 'feedIn .3s ease both' }}>
+            <div>
+              <label className="form-label">{loc.estimatedUsers}</label>
+              <input
+                name="estimated_users"
+                type="text"
+                inputMode="numeric"
+                className="form-input"
+                placeholder="10.000"
+                value={estUsers}
+                onChange={(e) => setEstUsers(formatNumber(e.target.value))}
+              />
+            </div>
+            <div>
+              <label className="form-label">{t.phone}</label>
+              <input name="phone" type="tel" className="form-input" />
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Phone row when no usage selected */}
+        {usageType === '' && (
+          <div className="form-row two">
+            <div>
+              <label className="form-label">{t.phone}</label>
+              <input name="phone" type="tel" className="form-input" />
+            </div>
+            <div />
+          </div>
+        )}
+
+        {/* Caso de uso */}
         <div className="form-row">
           <label className="form-label">{t.usecase}</label>
           <textarea name="usecase" className="form-textarea" rows={4} placeholder={t.usecasePlaceholder} />
         </div>
+
         <button
           type="submit"
           className="btn btn-primary btn-lg"
