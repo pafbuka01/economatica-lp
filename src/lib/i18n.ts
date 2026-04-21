@@ -101,7 +101,7 @@ export const dict = {
         ['REST + WebSocket nativos', true, 'Proprietário'],
         ['Histórico consultável via API', true, 'Separado'],
         ['Contrato B2B2C / redistribuição', true, 'Limitado'],
-        ['Tempo de integração', 'Dias', 'Meses'],
+        ['Tempo de integração', 'Horas', 'Meses'],
       ],
     },
     faq: {
@@ -250,7 +250,7 @@ export const dict = {
         ['Native REST + WebSocket', true, 'Proprietary'],
         ['Queryable history via API', true, 'Separate'],
         ['B2B2C / redistribution contract', true, 'Limited'],
-        ['Time to integration', 'Days', 'Months'],
+        ['Time to integration', 'Hours', 'Months'],
       ],
     },
     faq: {
@@ -399,7 +399,7 @@ export const dict = {
         ['REST + WebSocket nativos', true, 'Propietario'],
         ['Histórico consultable vía API', true, 'Separado'],
         ['Contrato B2B2C / redistribución', true, 'Limitado'],
-        ['Tiempo de integración', 'Días', 'Meses'],
+        ['Tiempo de integración', 'Horas', 'Meses'],
       ],
     },
     faq: {
