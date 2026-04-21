@@ -13,25 +13,25 @@ const F = t.footer;
           <span class="logo-sub">News API</span>
         </div>
         <p style="font-size:13px;max-width:320px;color:var(--fg-muted);">
-          Four decades of financial data infrastructure, now delivered via API.
+          {F.tagline}
         </p>
       </div>
       <div class="footer-col">
         <h5>{F.product}</h5>
         <ul>
-          <li><a href="#playground">Playground</a></li>
-          <li><a href="#coverage">Coverage</a></li>
-          <li><a href="#compare">vs. Wires</a></li>
-          <li><a href="#contact">Pricing</a></li>
+          <li><a href="#playground">{F.playground}</a></li>
+          <li><a href="#coverage">{F.coverage}</a></li>
+          <li><a href="#compare">{F.compare}</a></li>
+          <li><a href="#contact">{F.pricing}</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>{F.developers}</h5>
         <ul>
           <li><a href="#docs">{F.docsCta}</a></li>
-          <li><a href="#docs">API Reference</a></li>
-          <li><a href="#docs">SDKs</a></li>
-          <li><a href="#docs">Status</a></li>
+          <li><a href="#docs">{F.apiReference}</a></li>
+          <li><a href="#docs">{F.sdks}</a></li>
+          <li><a href="#docs">{F.status}</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -39,14 +39,14 @@ const F = t.footer;
         <ul>
           <li><a href="#">Economatica</a></li>
           <li><a href="#">Mover &middot; TC S.A.</a></li>
-          <li><a href="#">Security</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">{F.security}</a></li>
+          <li><a href="#contact">{F.contact}</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p>{F.copy}</p>
-      <p class="mono" style="font-size:12px;">v1.0 &middot; api.econews.economatica.com</p>
+      <p class="mono" style="font-size:12px;">{F.versionHost}</p>
     </div>
   </div>
 </footer>

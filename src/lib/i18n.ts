@@ -139,9 +139,14 @@ export const dict = {
       ],
     },
     footer: {
+      tagline: 'Quatro décadas de infraestrutura de dados financeiros, agora entregues via API.',
       product: 'Produto', company: 'Empresa', developers: 'Desenvolvedores', legal: 'Legal',
+      playground: 'Playground', coverage: 'Cobertura', compare: 'vs. Wires', pricing: 'Comercial',
+      apiReference: 'Referência da API', sdks: 'SDKs', status: 'Status',
+      security: 'Segurança', contact: 'Contato',
       copy: '© 2026 Economatica. Todos os direitos reservados.',
       docsCta: 'Ir para documentação →',
+      versionHost: 'v1.0 · api.econews.economatica.com',
     },
   },
   en: {
@@ -283,9 +288,14 @@ export const dict = {
       ],
     },
     footer: {
+      tagline: 'Four decades of financial data infrastructure, now delivered via API.',
       product: 'Product', company: 'Company', developers: 'Developers', legal: 'Legal',
+      playground: 'Playground', coverage: 'Coverage', compare: 'vs. Wires', pricing: 'Pricing',
+      apiReference: 'API Reference', sdks: 'SDKs', status: 'Status',
+      security: 'Security', contact: 'Contact',
       copy: '© 2026 Economatica. All rights reserved.',
       docsCta: 'Go to documentation →',
+      versionHost: 'v1.0 · api.econews.economatica.com',
     },
   },
   es: {
@@ -427,9 +437,14 @@ export const dict = {
       ],
     },
     footer: {
+      tagline: 'Cuatro décadas de infraestructura de datos financieros, ahora entregadas vía API.',
       product: 'Producto', company: 'Empresa', developers: 'Desarrolladores', legal: 'Legal',
+      playground: 'Playground', coverage: 'Cobertura', compare: 'vs. Wires', pricing: 'Comercial',
+      apiReference: 'Referencia de la API', sdks: 'SDKs', status: 'Status',
+      security: 'Seguridad', contact: 'Contacto',
       copy: '© 2026 Economatica. Todos los derechos reservados.',
       docsCta: 'Ir a la documentación →',
+      versionHost: 'v1.0 · api.econews.economatica.com',
     },
   },
 };
