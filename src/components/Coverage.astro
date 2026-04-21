@@ -59,7 +59,9 @@ const feats = t.features.items;
     <!-- Aggregation sub-block -->
     <div class="cov-agg">
       <div class="cov-agg-left">
-        <span class="chip"><span class="chip-dot"></span>{C.chip_agg}</span>
+        <span class="chip" style="align-self:flex-start;background:color-mix(in oklab, var(--accent) 10%, white 90%);color:var(--accent);border-color:color-mix(in oklab, var(--accent) 24%, var(--border) 76%);font-weight:600;">
+          <span class="chip-dot" style="background:var(--accent);"></span>{C.chip_agg}
+        </span>
         <h4 style="font-size:20px;margin-top:10px;letter-spacing:-0.02em;">{C.agg_title}</h4>
         <p style="font-size:14px;margin-top:8px;max-width:520px;">{C.agg_desc}</p>
       </div>

@@ -31,7 +31,7 @@ export const dict = {
       sub: 'A Eco News API não é apenas um agregador. É uma operação editorial própria, com jornalistas especializados entregando contexto, precisão e velocidade de terminal para produtos institucionais.',
       chip_prop: 'Cobertura própria',
       p1_title: 'Redação Mover',
-      chip_agg: 'Agregação',
+      chip_agg: 'Agregação de notícias',
       p1_desc: 'Redação focada em mercado financeiro, com jornalistas veteranos cobrindo em tempo real tudo o que move preço de ativos. Antes e melhor do que qualquer fonte pública.',
       p1_bullets: [ 'Principais eventos diários do mercado brasileiro', 'Mais de 80 indicadores econômicos do Brasil e do G7 assim que divulgados', 'Fatos corporativos: resultados, M&A, follow-ons, ratings, guidance', 'Eventos políticos com impacto direto sobre ativos', 'Notícias urgentes: alertas de alto impacto em segundos', 'Contexto editorial de analistas, não apenas agregação de fontes' ],
       p1_badge_lbl: 'Equipe',
