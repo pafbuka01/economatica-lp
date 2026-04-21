@@ -1,8 +1,3 @@
-// src/components/islands/ContactForm.tsx
-// React island — qualification form with client validation + submit state.
-//
-// Submits to /api/contact (Astro serverless route). See README section 8.
-
 import { useState } from 'react';
 
 type ContactDict = {
@@ -51,7 +46,8 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
 
   if (status === 'success') {
     return (
-      <div className="contact-success card">
+      <div className="form-card" style={{ textAlign: 'center', padding: '48px 32px' }}>
+        <div style={{ fontSize: 48, marginBottom: 16 }}>&#10003;</div>
         <h3>{t.success}</h3>
       </div>
     );
@@ -59,79 +55,104 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
 
   return (
     <div className="contact-grid">
-      <form className="contact-form card" onSubmit={onSubmit} noValidate>
-        <div className="form-row">
-          <Field name="name" label="Nome" error={errors.name} />
-          <Field name="email" label={t.email} type="email" error={errors.email} />
+      <form className="form-card" onSubmit={onSubmit} noValidate>
+        <div className="form-row two">
+          <div>
+            <label className="form-label">Nome</label>
+            <input name="name" type="text" className={`form-input ${errors.name ? 'has-error' : ''}`} required />
+            {errors.name && <em style={{ color: 'var(--red)', fontSize: 12 }}>{errors.name}</em>}
+          </div>
+          <div>
+            <label className="form-label">{t.email}</label>
+            <input name="email" type="email" className={`form-input ${errors.email ? 'has-error' : ''}`} required />
+            {errors.email && <em style={{ color: 'var(--red)', fontSize: 12 }}>{errors.email}</em>}
+          </div>
+        </div>
+        <div className="form-row two">
+          <div>
+            <label className="form-label">{t.company}</label>
+            <input name="company" type="text" className={`form-input ${errors.company ? 'has-error' : ''}`} required />
+            {errors.company && <em style={{ color: 'var(--red)', fontSize: 12 }}>{errors.company}</em>}
+          </div>
+          <div>
+            <label className="form-label">{t.role}</label>
+            <input name="role" type="text" className="form-input" />
+          </div>
+        </div>
+        <div className="form-row two">
+          <div>
+            <label className="form-label">{t.size}</label>
+            <select name="size" className="form-select" defaultValue="">
+              <option value="" disabled>&mdash;</option>
+              {t.sizes.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="form-label">{t.segment}</label>
+            <select name="segment" className="form-select" defaultValue="">
+              <option value="" disabled>&mdash;</option>
+              {t.segments.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="form-row two">
+          <div>
+            <label className="form-label">{t.integration}</label>
+            <select name="integration" className="form-select" defaultValue="">
+              <option value="" disabled>&mdash;</option>
+              {t.integrations.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="form-label">{t.phone}</label>
+            <input name="phone" type="tel" className="form-input" />
+          </div>
         </div>
         <div className="form-row">
-          <Field name="company" label={t.company} error={errors.company} />
-          <Field name="role" label={t.role} />
+          <label className="form-label">{t.usecase}</label>
+          <textarea name="usecase" className="form-textarea" rows={4} placeholder={t.usecasePlaceholder} />
         </div>
-        <div className="form-row">
-          <Select name="size" label={t.size} options={t.sizes} />
-          <Select name="segment" label={t.segment} options={t.segments} />
-        </div>
-        <div className="form-row">
-          <Select name="integration" label={t.integration} options={t.integrations} />
-          <Field name="phone" label={t.phone} type="tel" />
-        </div>
-        <label className="form-field">
-          <span>{t.usecase}</span>
-          <textarea name="usecase" rows={4} placeholder={t.usecasePlaceholder} />
-        </label>
         <button
           type="submit"
           className="btn btn-primary btn-lg"
+          style={{ width: '100%', marginTop: 8 }}
           disabled={status === 'submitting'}
         >
-          {status === 'submitting' ? '…' : t.submit}
+          {status === 'submitting' ? '...' : t.submit}
         </button>
         {status === 'error' && (
-          <p style={{ color: 'var(--red)', marginTop: 8 }}>
+          <p style={{ color: 'var(--red)', marginTop: 8, fontSize: 14 }}>
             Algo deu errado. Tente novamente ou escreva para sales@economatica.com
           </p>
         )}
       </form>
 
       <aside className="contact-sidebar">
-        <h4>{t.sidebarTitle}</h4>
-        <ol className="contact-steps">
-          {t.sidebarSteps.map((s, i) => (
-            <li key={i}>
-              <span className="step-num mono">{String(i + 1).padStart(2, '0')}</span>
-              <div>
-                <strong>{s.t}</strong>
-                <p>{s.d}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <h4 style={{ marginBottom: 24 }}>{t.sidebarTitle}</h4>
+        {t.sidebarSteps.map((s, i) => (
+          <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 28 }}>
+            <span className="mono" style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: 'var(--accent)',
+              flexShrink: 0,
+              width: 28,
+              height: 28,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--accent-soft)',
+              borderRadius: 8,
+            }}>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <strong style={{ display: 'block', fontSize: 15, color: 'var(--fg)', marginBottom: 4 }}>{s.t}</strong>
+              <p style={{ fontSize: 14, color: 'var(--fg-muted)', lineHeight: 1.5 }}>{s.d}</p>
+            </div>
+          </div>
+        ))}
       </aside>
     </div>
-  );
-}
-
-function Field({
-  name, label, type = 'text', error,
-}: { name: string; label: string; type?: string; error?: string }) {
-  return (
-    <label className={`form-field ${error ? 'has-error' : ''}`}>
-      <span>{label}</span>
-      <input name={name} type={type} required />
-      {error && <em>{error}</em>}
-    </label>
-  );
-}
-
-function Select({ name, label, options }: { name: string; label: string; options: string[] }) {
-  return (
-    <label className="form-field">
-      <span>{label}</span>
-      <select name={name} defaultValue="">
-        <option value="" disabled>—</option>
-        {options.map((o) => <option key={o} value={o}>{o}</option>)}
-      </select>
-    </label>
   );
 }

@@ -40,7 +40,6 @@ const lang = 'en';
   <Examples t={t} />
   <UseCases t={t} />
   <Compare t={t} />
-  <FAQ t={t} />
 
   <section id="contact" class="contact">
     <div class="container">
@@ -49,9 +48,10 @@ const lang = 'en';
         <h2 style="margin-top:16px;">{t.contact.h2}</h2>
         <p style="font-size:17px;margin-top:16px;">{t.contact.sub}</p>
       </div>
-      <ContactForm client:visible t={t.contact} locale="en" />
+      <ContactForm client:load t={t.contact} locale="en" />
     </div>
   </section>
 
+  <FAQ t={t} />
   <Footer t={t} />
 </BaseLayout>
