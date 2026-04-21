@@ -638,6 +638,7 @@ section:first-of-type { border-top: none; }
   overflow: hidden;
 }
 .cov-agg-stat { padding: 14px 16px; background: var(--bg-raised); display: flex; flex-direction: column; gap: 4px; }
+.cov-agg-stat .cov-stat-num { font-size: 22px; }
 
 /* Drawer */
 .pg-drawer {

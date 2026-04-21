@@ -1,5 +1,6 @@
 ---
 import type { Dict } from '../lib/i18n';
+import KpiValue from './islands/KpiValue';
 interface Props { t: Dict; }
 const { t } = Astro.props;
 const h = t.hero;
@@ -28,10 +29,10 @@ eco.<span class="tok-fn">stream</span>({
         <a href="#docs" class="btn btn-ghost btn-lg">{h.cta_docs}</a>
       </div>
       <div class="hero-meta">
-        <div class="hero-meta-item"><span class="num">{h.m1_num}</span><span class="lbl">{h.m1_lbl}</span></div>
-        <div class="hero-meta-item"><span class="num">{h.m2_num}</span><span class="lbl">{h.m2_lbl}</span></div>
-        <div class="hero-meta-item"><span class="num">{h.m3_num}</span><span class="lbl">{h.m3_lbl}</span></div>
-        <div class="hero-meta-item"><span class="num">{h.m4_num}</span><span class="lbl">{h.m4_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m1_num} /><span class="lbl">{h.m1_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m2_num} /><span class="lbl">{h.m2_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m3_num} /><span class="lbl">{h.m3_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m4_num} /><span class="lbl">{h.m4_lbl}</span></div>
       </div>
     </div>
 
