@@ -4,9 +4,9 @@ export const dict = {
     nav: { product: 'Produto', coverage: 'Cobertura', docs: 'Documentação', usecases: 'Casos de uso', pricing: 'Comercial', login: 'Entrar', talk: 'Falar com vendas' },
     hero: {
       eyebrow: 'Eco News API · Nova era Economatica',
-      h1_pre: 'A melhor redação',
-      h1_em: 'do jornalismo financeiro',
-      h1_post: 'do Brasil, agora via API.',
+      h1_pre: '',
+      h1_em: 'Jornalismo financeiro proprietário',
+      h1_post: 'entregue via API.',
       sub: 'Noticiário proprietário da equipe Mover Economatica em tempo real cobrindo principais eventos do mercado, indicadores do Brasil e G7, fatos corporativos e políticos, urgentes e plantão CVM. Somado à agregação das principais fontes locais e internacionais. Tudo estruturado para sistemas institucionais, fintechs e produtos B2B2C.',
       cta_sales: 'Falar com vendas',
       cta_docs: 'Ler a documentação →',
