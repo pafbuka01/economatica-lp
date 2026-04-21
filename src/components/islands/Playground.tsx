@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { mockFeed, filterOptions, sectorOptions, type NewsItem, type Sentiment } from '../../lib/mock-feed';
 
 type PlaygroundDict = {
@@ -32,6 +32,8 @@ export default function Playground({ t, locale = 'pt' }: { t: PlaygroundDict; lo
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<NewsItem | null>(null);
+  const feedListRef = useRef<HTMLDivElement | null>(null);
+  const autoAdvanceLockRef = useRef(false);
 
   const loc = locale === 'pt-BR' ? 'pt' : locale;
   const sectors = sectorOptions[loc] || sectorOptions.pt;
@@ -54,6 +56,55 @@ export default function Playground({ t, locale = 'pt' }: { t: PlaygroundDict; lo
   }, [paused]);
 
   const visible = useMemo(() => feed.filter((n) => matchesItem(n, filters, loc)), [feed, filters, loc]);
+
+  useEffect(() => {
+    const el = feedListRef.current;
+    if (!el) return;
+
+    const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+    const scrollToNextSection = () => {
+      const playgroundSection = el.closest('#playground');
+      const nextSection = playgroundSection?.nextElementSibling as HTMLElement | null;
+      if (!nextSection) return;
+      nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      autoAdvanceLockRef.current = true;
+      window.setTimeout(() => { autoAdvanceLockRef.current = false; }, 900);
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (!isMobile() || autoAdvanceLockRef.current) return;
+      const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
+      if (nearBottom && event.deltaY > 0) {
+        event.preventDefault();
+        scrollToNextSection();
+      }
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      if (!isMobile() || autoAdvanceLockRef.current) return;
+      const currentY = event.touches[0]?.clientY ?? 0;
+      const swipingUp = touchStartY - currentY > 18;
+      const nearBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
+      if (nearBottom && swipingUp) {
+        scrollToNextSection();
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: true });
+
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+    };
+  }, []);
 
   return (
     <>
@@ -109,7 +160,7 @@ export default function Playground({ t, locale = 'pt' }: { t: PlaygroundDict; lo
             <span>GET /v1/articles</span>
             <span style={{ color: 'var(--fg-subtle)' }}>{t.clickHint}</span>
           </div>
-          <div className="pg-feed-list">
+          <div className="pg-feed-list" ref={feedListRef}>
             {visible.map((item) => (
               <FeedRow
                 key={item.id}
