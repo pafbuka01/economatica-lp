@@ -1068,3 +1068,85 @@ section:first-of-type { border-top: none; }
 .sent-pos { color: var(--green); }
 .sent-neg { color: var(--red); }
 .sent-neu { color: var(--amber); }
+
+/* ========== MOBILE OVERRIDES (< 640px) ========== */
+@media (max-width: 640px) {
+  /* Tighter container padding */
+  .container { padding: 0 18px; }
+
+  /* Hero */
+  .hero { padding-top: 56px; padding-bottom: 40px; }
+  h1 { font-size: clamp(28px, 8vw, 40px); }
+  .hero-sub { font-size: 16px; margin-top: 16px; }
+  .hero-ctas { margin-top: 24px; }
+  .hero-ctas .btn-lg { width: 100%; justify-content: center; }
+  .hero-meta { gap: 16px; margin-top: 24px; padding-top: 20px; }
+  .hero-meta-item .num { font-size: 22px; }
+  .hero-meta-item .lbl { font-size: 10px; }
+  .hero-viz { display: none; } /* hide code snippet on mobile */
+
+  /* Section spacing */
+  section { padding: clamp(36px, 5vw, 56px) 0; }
+  .section-head { margin-bottom: 28px; }
+  .section-head p { font-size: 15px; }
+  h2 { font-size: clamp(22px, 6vw, 32px); }
+
+  /* Playground */
+  .pg { border-radius: 14px; }
+  .pg-toolbar { padding: 10px 14px; }
+  .pg-body { min-height: auto; }
+  .pg-filters { padding: 14px; border-right: none; border-bottom: 1px solid var(--border); }
+  .pg-filter { margin-bottom: 14px; }
+  .pg-feed-head { padding: 10px 14px; flex-direction: column; gap: 4px; align-items: flex-start; }
+  .pg-feed-list { max-height: 400px; }
+  .feed-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+  .feed-time {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .feed-time br { display: none; }
+  .feed-tags {
+    justify-content: flex-start;
+  }
+  .feed-head-txt { font-size: 13px; }
+
+  /* Coverage */
+  .cov-hero { padding: 20px; gap: 24px; }
+  .cov-stat-grid { grid-template-columns: 1fr 1fr; }
+  .cov-stat-num { font-size: 22px; }
+  .cov-tick { font-size: 11px; padding: 12px; }
+  .cov-tick-item { grid-template-columns: 56px 56px 1fr; gap: 6px; font-size: 11px; }
+  .cov-agg { padding: 18px; gap: 20px; }
+  .cov-agg-stats { grid-template-columns: 1fr; }
+
+  /* Feature cards */
+  .feat-big { padding: 20px; gap: 24px; grid-template-columns: 1fr !important; }
+  .feat-card { padding: 20px; }
+  .grid-2, .grid-3 { gap: 16px; }
+
+  /* Compare table */
+  .compare th, .compare td { padding: 12px 14px; font-size: 13px; }
+
+  /* Contact form */
+  .contact-grid { grid-template-columns: 1fr !important; gap: 28px; }
+  .form-card { padding: 20px; }
+  .form-row.two { grid-template-columns: 1fr; }
+
+  /* FAQ */
+  .faq-q { font-size: 16px; }
+
+  /* Footer */
+  .footer { padding: 32px 0 20px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+  /* Nav */
+  .nav-inner { height: 56px; }
+  .logo-sub { display: none; }
+  .btn-sm { padding: 0 10px; font-size: 12px; height: 32px; }
+}
