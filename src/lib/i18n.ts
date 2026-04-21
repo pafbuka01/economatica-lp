@@ -7,7 +7,7 @@ export const dict = {
       h1_pre: '',
       h1_em: 'Jornalismo financeiro proprietário',
       h1_post: 'entregue via API.',
-      sub: 'Noticiário proprietário da equipe Mover Economatica em tempo real cobrindo principais eventos do mercado, indicadores do Brasil e G7, fatos corporativos e políticos, urgentes e plantão CVM. Somado à agregação das principais fontes locais e internacionais. Tudo estruturado para sistemas institucionais, fintechs e produtos B2B2C.',
+      sub: 'Cobertura editorial proprietária, estruturada para integração em produtos financeiros, plataformas e workflows institucionais.',
       cta_sales: 'Falar com vendas',
       cta_docs: 'Ler a documentação →',
       m1_num: '< 100ms', m1_lbl: 'Latência p95',
