@@ -118,8 +118,8 @@ export const dict = {
     },
     contact: {
       eyebrow: 'Comercial',
-      h2: 'Vamos desenhar seu contrato.',
-      sub: 'Nosso time comercial entra em contato em até 1 dia útil com um escopo preliminar, próximos passos de integração e acesso à sandbox.',
+      h2: 'Solicite uma proposta para sua operação',
+      sub: 'Nosso time comercial retorna em até 1 dia útil com um escopo preliminar, próximos passos de integração e acesso à sandbox.',
       email: 'E-mail corporativo', company: 'Empresa', role: 'Cargo', size: 'Tamanho da empresa',
       sizes: ['1–50', '50–250', '250–1000', '1000+'],
       segment: 'Segmento',
