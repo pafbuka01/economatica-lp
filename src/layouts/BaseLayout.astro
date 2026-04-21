@@ -29,6 +29,16 @@ const { lang, title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={Astro.url.href} />
 
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://economatica-lp.vercel.app/og-image.svg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://economatica-lp.vercel.app/og-image.svg" />
+
     <!-- Alternates for SEO -->
     <link rel="alternate" hreflang="pt-BR" href="https://econews.economatica.com/" />
     <link rel="alternate" hreflang="en" href="https://econews.economatica.com/en" />
