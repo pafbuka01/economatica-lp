@@ -129,29 +129,20 @@ export default function ContactForm({ t, locale }: { t: ContactDict; locale: str
           </div>
         </div>
 
-        {/* Row 3: Tipo de uso + Segmento */}
-        <div className="form-row two">
-          <div>
-            <label className="form-label">{loc.usage}</label>
-            <div className="segments">
-              {(['internal', 'b2b', 'b2b2c'] as UsageType[]).map((opt) => (
-                <button
-                  key={opt}
-                  type="button"
-                  className={`segment ${usageType === opt ? 'active' : ''}`}
-                  onClick={() => setUsageType(usageType === opt ? '' : opt)}
-                >
-                  {usageLabels[opt]}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <label className="form-label">{t.segment}</label>
-            <select name="segment" className="form-select" defaultValue="">
-              <option value="" disabled>&mdash;</option>
-              {t.segments.map((o) => <option key={o} value={o}>{o}</option>)}
-            </select>
+        {/* Row 3: Tipo de uso (full width) */}
+        <div className="form-row">
+          <label className="form-label">{loc.usage}</label>
+          <div className="segments">
+            {(['internal', 'b2b', 'b2b2c'] as UsageType[]).map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                className={`segment ${usageType === opt ? 'active' : ''}`}
+                onClick={() => setUsageType(usageType === opt ? '' : opt)}
+              >
+                {usageLabels[opt]}
+              </button>
+            ))}
           </div>
         </div>
 
