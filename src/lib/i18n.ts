@@ -13,7 +13,7 @@ export const dict = {
       m1_num: '< 100ms', m1_lbl: 'Latência p95',
       m2_num: '99.95%', m2_lbl: 'SLA uptime',
       m3_num: 'REST + WS', m3_lbl: 'Entrega',
-      m4_num: '4 décadas', m4_lbl: 'de dados financeiros',
+      m4_num: '40 anos', m4_lbl: 'de dados financeiros',
     },
     trust: 'Construído pela Economatica · infraestrutura de dados usada por',
     playground: {
@@ -155,7 +155,7 @@ export const dict = {
       m1_num: '< 100ms', m1_lbl: 'p95 latency',
       m2_num: '99.95%', m2_lbl: 'Uptime SLA',
       m3_num: 'REST + WS', m3_lbl: 'Delivery',
-      m4_num: '4 decades', m4_lbl: 'of market data',
+      m4_num: '40 years', m4_lbl: 'of market data',
     },
     trust: 'Built by Economatica · market-data infrastructure used by',
     playground: {
@@ -297,7 +297,7 @@ export const dict = {
       m1_num: '< 100ms', m1_lbl: 'Latencia p95',
       m2_num: '99.95%', m2_lbl: 'SLA de uptime',
       m3_num: 'REST + WS', m3_lbl: 'Entrega',
-      m4_num: '4 décadas', m4_lbl: 'de datos financieros',
+      m4_num: '40 anos', m4_lbl: 'de datos financieros',
     },
     trust: 'Construido por Economatica · infraestructura de datos usada por',
     playground: {
