@@ -35,19 +35,19 @@ const USAGE_LABELS: Record<string, Record<UsageType, string>> = {
 const LABELS: Record<string, { usage: string; companySize: string; companySizes: string[]; estimatedUsers: string }> = {
   pt: {
     usage: 'Tipo de uso',
-    companySize: 'Tamanho da empresa',
+    companySize: 'N\u00b0 de funcionarios',
     companySizes: ['1\u201350', '50\u2013250', '250\u20131.000', '1.000+'],
     estimatedUsers: 'Usuarios finais estimados',
   },
   en: {
     usage: 'Usage type',
-    companySize: 'Company size',
+    companySize: 'Number of employees',
     companySizes: ['1\u201350', '50\u2013250', '250\u20131,000', '1,000+'],
     estimatedUsers: 'Estimated end users',
   },
   es: {
     usage: 'Tipo de uso',
-    companySize: 'Tamano de la empresa',
+    companySize: 'N\u00b0 de empleados',
     companySizes: ['1\u201350', '50\u2013250', '250\u20131.000', '1.000+'],
     estimatedUsers: 'Usuarios finales estimados',
   },
