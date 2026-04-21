@@ -175,7 +175,7 @@ export const dict = {
       p1_desc: 'A newsroom focused on financial markets with veteran journalists covering, in real time, everything that moves asset prices. Earlier and more accurately than any public source.',
       p1_bullets: ['Major daily events across the Brazilian market','80+ Brazil + G7 macro indicators the moment they print','Corporate facts: earnings, M&A, follow-ons, ratings, guidance','Political events with direct impact on assets','Breaking news: high-impact alerts within seconds','Analyst-grade editorial context, not just aggregation'],
       p1_badge_lbl: 'Team',
-      p1_badge: 'Mover newsroom, part of Economatica. 40+ years delivering financial intelligence to Brazil's largest institutions.',
+      p1_badge: "Mover newsroom, part of Economatica. 40+ years delivering financial intelligence to Brazil's largest institutions.",
       breaking: 'URGENT',
       stats: [
         { n: '180+', l: 'Headlines/day' },
