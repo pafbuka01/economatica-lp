@@ -2,12 +2,14 @@
 import type { Dict } from '../lib/i18n';
 interface Props { t: Dict; lang: string; }
 const { t, lang } = Astro.props;
-const langMap: Record<string, string> = { 'pt-BR': '/', en: '/en', es: '/es' };
+
+const currentFlag = lang === 'en' ? '\uD83C\uDDFA\uD83C\uDDF8' : lang === 'es' ? '\uD83C\uDDEA\uD83C\uDDF8' : '\uD83C\uDDE7\uD83C\uDDF7';
+const currentCode = lang === 'en' ? 'EN' : lang === 'es' ? 'ES' : 'PT';
 ---
 <nav class="nav" id="nav">
   <div class="container nav-inner">
     <a class="logo" href="#top">
-      <img src="/economatica-logo.svg" alt="Economatica" style="height:20px;display:block;" class="logo-img" />
+      <img src="/economatica-logo.svg" alt="Economatica" style="height:20px;display:block;color:var(--fg);" class="logo-img" />
       <span class="logo-sub">News API</span>
     </a>
     <div class="nav-links">
@@ -15,23 +17,102 @@ const langMap: Record<string, string> = { 'pt-BR': '/', en: '/en', es: '/es' };
       <a href="#coverage">{t.nav.coverage}</a>
       <a href="#usecases">{t.nav.usecases}</a>
       <a href="#docs">{t.nav.docs}</a>
-      <a href="#pricing">{t.nav.pricing}</a>
+      <a href="#contact">{t.nav.pricing}</a>
     </div>
     <div class="nav-right">
-      <select class="lang-select" id="lang-select">
-        <option value="/" selected={lang === 'pt-BR'}>PT</option>
-        <option value="/en" selected={lang === 'en'}>EN</option>
-        <option value="/es" selected={lang === 'es'}>ES</option>
-      </select>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-trigger" type="button" id="lang-trigger">
+          <span class="lang-flag">{currentFlag}</span>
+          <span class="mono" style="font-size:12px;">{currentCode}</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:2px;">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <a href="/" class={`lang-option ${lang === 'pt-BR' ? 'active' : ''}`}>
+            <span class="lang-flag">{'\uD83C\uDDE7\uD83C\uDDF7'}</span>
+            <span>Portugues</span>
+          </a>
+          <a href="/en" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>
+            <span class="lang-flag">{'\uD83C\uDDFA\uD83C\uDDF8'}</span>
+            <span>English</span>
+          </a>
+          <a href="/es" class={`lang-option ${lang === 'es' ? 'active' : ''}`}>
+            <span class="lang-flag">{'\uD83C\uDDEA\uD83C\uDDF8'}</span>
+            <span>Espanol</span>
+          </a>
+        </div>
+      </div>
       <a href="#contact" class="btn btn-primary btn-sm">{t.nav.talk}</a>
     </div>
   </div>
 </nav>
 
+<style>
+  .lang-dropdown {
+    position: relative;
+  }
+  .lang-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s ease;
+    font-family: inherit;
+  }
+  .lang-trigger:hover {
+    color: var(--fg);
+    border-color: var(--border-strong);
+  }
+  .lang-flag {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .lang-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 160px;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow-md);
+    padding: 6px;
+    z-index: 60;
+  }
+  .lang-menu.open {
+    display: block;
+  }
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: all .12s ease;
+  }
+  .lang-option:hover {
+    background: var(--bg-alt);
+    color: var(--fg);
+  }
+  .lang-option.active {
+    color: var(--fg);
+    font-weight: 500;
+  }
+</style>
+
 <script is:inline>
-  // Scroll detection for nav border
   (function() {
-    const nav = document.getElementById('nav');
+    var nav = document.getElementById('nav');
     if (!nav) return;
     function onScroll() {
       if (window.scrollY > 12) {
@@ -43,11 +124,19 @@ const langMap: Record<string, string> = { 'pt-BR': '/', en: '/en', es: '/es' };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Language select navigation
-    var sel = document.getElementById('lang-select');
-    if (sel) {
-      sel.addEventListener('change', function() {
-        window.location.href = sel.value;
+    // Language dropdown
+    var trigger = document.getElementById('lang-trigger');
+    var menu = document.getElementById('lang-menu');
+    if (trigger && menu) {
+      trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.classList.toggle('open');
+      });
+      document.addEventListener('click', function() {
+        menu.classList.remove('open');
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') menu.classList.remove('open');
       });
     }
   })();
