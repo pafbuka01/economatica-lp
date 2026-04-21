@@ -1,9 +1,3 @@
-// src/components/islands/Playground.tsx
-// React island — live-updating feed + filter chips + JSON drawer.
-//
-// This is a scaffold showing the intended shape. Wire it up against your
-// real API by replacing the `useInterval` seed with a fetch/WS subscription.
-
 import { useEffect, useMemo, useState } from 'react';
 import { mockFeed, filterOptions, type NewsItem, type Sentiment } from '../../lib/mock-feed';
 
@@ -35,13 +29,14 @@ function matches(item: NewsItem, f: Filters): boolean {
   return true;
 }
 
+const sentLabel: Record<string, string> = { pos: 'pos', neg: 'neg', neu: 'neu' };
+
 export default function Playground({ t }: { t: PlaygroundDict }) {
   const [feed, setFeed] = useState<NewsItem[]>(mockFeed.slice(0, 6));
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [paused, setPaused] = useState(false);
   const [selected, setSelected] = useState<NewsItem | null>(null);
 
-  // Simulate the stream: every 3s, prepend a fresh sample with a new id + timestamp.
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
@@ -60,89 +55,125 @@ export default function Playground({ t }: { t: PlaygroundDict }) {
 
   const visible = useMemo(() => feed.filter((n) => matches(n, filters)), [feed, filters]);
 
-  return (
-    <div className="playground-grid">
-      <aside className="playground-filters">
-        <FilterGroup
-          label={t.tickers}
-          options={filterOptions.tickers}
-          value={filters.ticker}
-          onChange={(v) => setFilters((f) => ({ ...f, ticker: v }))}
-        />
-        <FilterGroup
-          label={t.sectors}
-          options={filterOptions.sectors}
-          value={filters.sector}
-          onChange={(v) => setFilters((f) => ({ ...f, sector: v }))}
-        />
-        <FilterGroup
-          label={t.themes}
-          options={filterOptions.themes}
-          value={filters.theme}
-          onChange={(v) => setFilters((f) => ({ ...f, theme: v }))}
-        />
-        <FilterGroup
-          label={t.sentiment}
-          options={filterOptions.sentiment}
-          value={filters.sentiment}
-          onChange={(v) => setFilters((f) => ({ ...f, sentiment: v as Sentiment | null }))}
-          renderLabel={(v) => (v === 'pos' ? t.pos : v === 'neg' ? t.neg : v === 'neu' ? t.neu : v)}
-        />
-      </aside>
+  const sentimentLabels: Record<string, string> = {
+    pos: t.pos, neg: t.neg, neu: t.neu,
+  };
 
-      <div className="playground-feed">
-        <div className="playground-head">
+  return (
+    <>
+      {/* Toolbar */}
+      <div className="pg-toolbar">
+        <div className="pg-toolbar-left">
           <span className={`chip ${paused ? '' : 'live'}`}>
             <span className="chip-dot" />
             {paused ? t.paused : t.live}
           </span>
+          <span className="chip">
+            <span className="chip-dot" style={{ background: 'var(--blue)' }} />
+            wss://api.econews/v1/stream
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span className="mono" style={{ fontSize: 12, color: 'var(--fg-subtle)' }}>
-            {t.showing} {visible.length} {t.events}
+            {t.showing} <strong style={{ color: 'var(--fg)' }}>{visible.length}</strong> {t.events}
           </span>
           <button className="btn btn-ghost btn-sm" onClick={() => setPaused((p) => !p)}>
-            {paused ? '▶' : '❚❚'}
+            {paused ? '\u25B6' : '\u275A\u275A'}
           </button>
         </div>
-
-        <ul className="feed-list">
-          {visible.map((item) => (
-            <FeedRow key={item.id} item={item} onClick={() => setSelected(item)} />
-          ))}
-          {visible.length === 0 && (
-            <li className="feed-empty">Ajuste os filtros para ver notícias</li>
-          )}
-        </ul>
-
-        <p className="playground-hint mono">{t.clickHint}</p>
       </div>
 
+      {/* Body: filters left + feed right */}
+      <div className="pg-body">
+        <div className="pg-filters">
+          <FilterGroup
+            label={t.tickers}
+            allLabel={t.all}
+            options={filterOptions.tickers}
+            value={filters.ticker}
+            onChange={(v) => setFilters((f) => ({ ...f, ticker: v }))}
+          />
+          <FilterGroup
+            label={t.sectors}
+            allLabel={t.all}
+            options={filterOptions.sectors}
+            value={filters.sector}
+            onChange={(v) => setFilters((f) => ({ ...f, sector: v }))}
+          />
+          <FilterGroup
+            label={t.themes}
+            allLabel={t.all}
+            options={filterOptions.themes}
+            value={filters.theme}
+            onChange={(v) => setFilters((f) => ({ ...f, theme: v }))}
+          />
+          <FilterGroup
+            label={t.sentiment}
+            allLabel={t.all}
+            options={filterOptions.sentiment}
+            value={filters.sentiment}
+            onChange={(v) => setFilters((f) => ({ ...f, sentiment: v as Sentiment | null }))}
+            renderLabel={(v) => sentimentLabels[v] || v}
+          />
+        </div>
+
+        <div className="pg-feed">
+          <div className="pg-feed-head">
+            <span>GET /v1/articles</span>
+            <span style={{ color: 'var(--fg-subtle)' }}>{t.clickHint}</span>
+          </div>
+          <div className="pg-feed-list">
+            {visible.map((item) => (
+              <FeedRow
+                key={item.id}
+                item={item}
+                active={selected?.id === item.id}
+                onClick={() => setSelected(selected?.id === item.id ? null : item)}
+              />
+            ))}
+            {visible.length === 0 && (
+              <div style={{ padding: 40, textAlign: 'center', color: 'var(--fg-subtle)' }}>
+                Ajuste os filtros para ver noticias
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* JSON drawer */}
       {selected && (
-        <div className="playground-drawer">
-          <button onClick={() => setSelected(null)} aria-label="close">×</button>
-          <pre className="mono">{JSON.stringify(selected, null, 2)}</pre>
+        <div className="pg-drawer">
+          <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{JSON.stringify(selected, null, 2)}</pre>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
 function FilterGroup<T extends string>({
-  label, options, value, onChange, renderLabel = (v) => String(v),
+  label, allLabel, options, value, onChange, renderLabel = (v) => String(v),
 }: {
   label: string;
+  allLabel: string;
   options: T[];
   value: T | null;
   onChange: (v: T | null) => void;
   renderLabel?: (v: T) => string;
 }) {
   return (
-    <div className="filter-group">
-      <div className="filter-label mono">{label}</div>
-      <div className="filter-chips">
+    <div className="pg-filter">
+      <span className="pg-filter-lbl">{label}</span>
+      <div className="pill-row">
+        <button
+          className={`pill ${value === null ? 'active' : ''}`}
+          onClick={() => onChange(null)}
+        >
+          {allLabel}
+        </button>
         {options.map((o) => (
           <button
             key={o}
-            className={`chip ${value === o ? 'chip-active' : ''}`}
+            className={`pill ${value === o ? 'active' : ''}`}
             onClick={() => onChange(value === o ? null : o)}
           >
             {renderLabel(o)}
@@ -153,21 +184,39 @@ function FilterGroup<T extends string>({
   );
 }
 
-function FeedRow({ item, onClick }: { item: NewsItem; onClick: () => void }) {
-  const sentimentClass = item.sentiment;
+function FeedRow({ item, active, onClick }: { item: NewsItem; active: boolean; onClick: () => void }) {
+  const sentClass = item.sentiment === 'pos' ? 'pos' : item.sentiment === 'neg' ? 'neg' : 'neu';
   return (
-    <li className="feed-row" onClick={onClick}>
-      <time className="mono feed-time">
+    <div className={`feed-item ${active ? 'active' : ''}`} onClick={onClick}>
+      <div className="feed-time">
         {new Date(item.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-      </time>
-      <div className="feed-tickers mono">
-        {item.tickers.slice(0, 2).join(' · ')}
+        <br />
+        <span style={{ color: item.sentimentScore > 0.5 ? 'var(--green)' : item.sentimentScore < 0.4 ? 'var(--red)' : 'var(--amber)' }}>
+          {item.sentimentScore > 0.5 ? '+' : ''}{(item.sentimentScore - 0.5).toFixed(2)}
+        </span>
       </div>
-      <div className="feed-headline">{item.headline}</div>
-      <span className={`chip ${sentimentClass}`}>
-        <span className="chip-dot" />
-        {item.sentiment.toUpperCase()}
-      </span>
-    </li>
+      <div>
+        <div className="feed-head-txt">{item.headline}</div>
+        <div className="feed-meta">
+          <span className={`chip ${sentClass}`}>
+            <span className="chip-dot" />
+            {item.sector}
+          </span>
+          <span className="chip">
+            {item.theme}
+          </span>
+          <span className="chip mono" style={{ fontSize: 11 }}>
+            rel {Math.round(item.sentimentScore * 100)}%
+          </span>
+        </div>
+      </div>
+      <div className="feed-tags">
+        <span className="ticker">{item.tickers[0]}</span>
+        <span className={`chip ${sentClass}`}>
+          <span className="chip-dot" />
+          {sentClass}
+        </span>
+      </div>
+    </div>
   );
 }
