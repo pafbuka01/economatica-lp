@@ -106,10 +106,9 @@ export const mockFeed: NewsItem[] = [
   },
 ];
 
-// All unique values for filter chip options.
+// Filter options — curated to ensure every option has at least one match.
 export const filterOptions = {
-  tickers: Array.from(new Set(mockFeed.flatMap((n) => n.tickers))),
+  tickers: ['PETR4', 'VALE3', 'ITUB4', 'BBDC4', 'IBOV', 'DXY', 'MGLU3', 'JBSS3', 'SUZB3'],
   sectors: Array.from(new Set(mockFeed.map((n) => n.sector))),
-  themes:  Array.from(new Set(mockFeed.map((n) => n.theme))),
   sentiment: ['pos', 'neu', 'neg'] as Sentiment[],
 };

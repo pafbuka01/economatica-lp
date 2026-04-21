@@ -11,11 +11,10 @@ type PlaygroundDict = {
 type Filters = {
   ticker: string | null;
   sector: string | null;
-  theme: string | null;
   sentiment: Sentiment | null;
 };
 
-const EMPTY: Filters = { ticker: null, sector: null, theme: null, sentiment: null };
+const EMPTY: Filters = { ticker: null, sector: null, sentiment: null };
 
 function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -24,7 +23,6 @@ function pick<T>(arr: T[]): T {
 function matches(item: NewsItem, f: Filters): boolean {
   if (f.ticker && !item.tickers.includes(f.ticker)) return false;
   if (f.sector && item.sector !== f.sector) return false;
-  if (f.theme  && item.theme !== f.theme) return false;
   if (f.sentiment && item.sentiment !== f.sentiment) return false;
   return true;
 }
@@ -99,13 +97,6 @@ export default function Playground({ t }: { t: PlaygroundDict }) {
             options={filterOptions.sectors}
             value={filters.sector}
             onChange={(v) => setFilters((f) => ({ ...f, sector: v }))}
-          />
-          <FilterGroup
-            label={t.themes}
-            allLabel={t.all}
-            options={filterOptions.themes}
-            value={filters.theme}
-            onChange={(v) => setFilters((f) => ({ ...f, theme: v }))}
           />
           <FilterGroup
             label={t.sentiment}
