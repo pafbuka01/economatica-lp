@@ -1157,7 +1157,7 @@ section:first-of-type { border-top: none; }
   .form-card { padding: 16px; }
   .form-row.two { grid-template-columns: 1fr; gap: 12px; }
   .form-row { margin-bottom: 14px; }
-  .form-input, .form-select, .form-textarea { height: 40px; font-size: 14px; }
+  .form-input, .form-select, .form-textarea { height: 40px; font-size: 16px; }
   .segments { gap: 6px; }
   .segment { padding: 6px 12px; font-size: 12px; }
 
