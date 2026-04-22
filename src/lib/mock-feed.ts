@@ -174,7 +174,6 @@ export const mockFeed: NewsItem[] = [
 ];
 
 // Filter options — curated to ensure every option has at least one match.
-const allSectors = Array.from(new Set(mockFeed.map((n) => JSON.stringify(n.sector))));
 export const sectorOptions: Record<string, string[]> = {
   pt: Array.from(new Set(mockFeed.map((n) => n.sector.pt))),
   en: Array.from(new Set(mockFeed.map((n) => n.sector.en))),
