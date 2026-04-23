@@ -19,7 +19,7 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
 
   try {
     const encoded = auth.slice(6);
-    const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
+    const decoded = atob(encoded);
     const idx = decoded.indexOf(':');
     const user = idx >= 0 ? decoded.slice(0, idx) : '';
     const pass = idx >= 0 ? decoded.slice(idx + 1) : '';
