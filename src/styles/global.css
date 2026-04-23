@@ -276,6 +276,7 @@ section:first-of-type { border-top: none; }
   color: var(--fg);
   display: block;
   line-height: 1;
+  min-height: 28px;
 }
 .hero-meta-item .lbl {
   font-size: 12px;
@@ -327,11 +328,6 @@ section:first-of-type { border-top: none; }
   gap: 6px;
   padding: 10px 0;
   border-top: 1px dashed var(--border);
-  animation: streamIn .5s ease both;
-}
-@keyframes streamIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 .stream-item:first-child { border-top: 0; padding-top: 0; }
 .stream-meta {

@@ -26,13 +26,13 @@ eco.<span class="tok-fn">stream</span>({
       <p class="hero-sub">{h.sub}</p>
       <div class="hero-ctas">
         <a href="#contact" class="btn btn-primary btn-lg">{h.cta_sales}</a>
-        <a href="#docs" class="btn btn-ghost btn-lg">{h.cta_docs}</a>
+        <a href="http://econewsapi-prod-alb-1210485769.us-east-1.elb.amazonaws.com/docs" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-lg">{h.cta_docs}</a>
       </div>
       <div class="hero-meta">
-        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m1_num} /><span class="lbl">{h.m1_lbl}</span></div>
-        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m2_num} /><span class="lbl">{h.m2_lbl}</span></div>
-        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m3_num} /><span class="lbl">{h.m3_lbl}</span></div>
-        <div class="hero-meta-item"><KpiValue client:load className="num" value={h.m4_num} /><span class="lbl">{h.m4_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:visible className="num" value={h.m1_num} /><span class="lbl">{h.m1_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:visible className="num" value={h.m2_num} /><span class="lbl">{h.m2_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:visible className="num" value={h.m3_num} /><span class="lbl">{h.m3_lbl}</span></div>
+        <div class="hero-meta-item"><KpiValue client:visible className="num" value={h.m4_num} /><span class="lbl">{h.m4_lbl}</span></div>
       </div>
     </div>
 
