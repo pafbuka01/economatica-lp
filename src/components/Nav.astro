@@ -3,7 +3,6 @@ import type { Dict } from '../lib/i18n';
 interface Props { t: Dict; lang: string; }
 const { t, lang } = Astro.props;
 
-const currentFlag = lang === 'en' ? '\uD83C\uDDFA\uD83C\uDDF8' : lang === 'es' ? '\uD83C\uDDEA\uD83C\uDDF8' : '\uD83C\uDDE7\uD83C\uDDF7';
 const currentCode = lang === 'en' ? 'EN' : lang === 'es' ? 'ES' : 'PT';
 ---
 <nav class="nav" id="nav">
@@ -22,7 +21,7 @@ const currentCode = lang === 'en' ? 'EN' : lang === 'es' ? 'ES' : 'PT';
     <div class="nav-right">
       <div class="lang-dropdown" id="lang-dropdown">
         <button class="lang-trigger" type="button" id="lang-trigger">
-          <span class="lang-flag">{currentFlag}</span>
+          <span class="lang-code-badge">{currentCode}</span>
           <span class="mono" style="font-size:12px;">{currentCode}</span>
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:2px;">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,16 +29,16 @@ const currentCode = lang === 'en' ? 'EN' : lang === 'es' ? 'ES' : 'PT';
         </button>
         <div class="lang-menu" id="lang-menu">
           <a href="/" class={`lang-option ${lang === 'pt-BR' ? 'active' : ''}`}>
-            <span class="lang-flag">{'\uD83C\uDDE7\uD83C\uDDF7'}</span>
-            <span>Portugues</span>
+            <span class="lang-code-badge">PT</span>
+            <span>Português</span>
           </a>
           <a href="/en" class={`lang-option ${lang === 'en' ? 'active' : ''}`}>
-            <span class="lang-flag">{'\uD83C\uDDFA\uD83C\uDDF8'}</span>
+            <span class="lang-code-badge">EN</span>
             <span>English</span>
           </a>
           <a href="/es" class={`lang-option ${lang === 'es' ? 'active' : ''}`}>
-            <span class="lang-flag">{'\uD83C\uDDEA\uD83C\uDDF8'}</span>
-            <span>Espanol</span>
+            <span class="lang-code-badge">ES</span>
+            <span>Español</span>
           </a>
         </div>
       </div>
@@ -69,8 +68,20 @@ const currentCode = lang === 'en' ? 'EN' : lang === 'es' ? 'ES' : 'PT';
     color: var(--fg);
     border-color: var(--border-strong);
   }
-  .lang-flag {
-    font-size: 16px;
+  .lang-code-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    color: var(--fg);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     line-height: 1;
   }
   .lang-menu {
