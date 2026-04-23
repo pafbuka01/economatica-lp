@@ -33,7 +33,7 @@ export const POST: APIRoute = async ({ request }) => {
   const html = renderLeadEmail(payload, locale);
 
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: resendFrom,
       to: [contactTo],
       replyTo: email,
@@ -41,8 +41,8 @@ export const POST: APIRoute = async ({ request }) => {
       html,
     });
 
-    console.log('[contact] lead emailed', { name, email, company });
-    return json({ ok: true });
+    console.log('[contact] lead emailed', { name, email, company, result });
+    return json({ ok: true, id: result.data?.id ?? null });
   } catch (error) {
     console.error('[contact] resend error', error);
     return json({ ok: false, error: 'email_send_failed' }, 500);
