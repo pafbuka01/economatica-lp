@@ -4,8 +4,8 @@ import { Resend } from 'resend';
 export const prerender = false;
 
 const resendApiKey = import.meta.env.RESEND_API_KEY;
-const resendFrom = 'Economatica <onboarding@resend.dev>';
-const contactTo = import.meta.env.CONTACT_TO || 'pafbuka01@gmail.com';
+const resendFrom = import.meta.env.RESEND_FROM || 'Economatica <onboarding@resend.dev>';
+const contactTo = (import.meta.env.CONTACT_TO || 'pafbuka01@gmail.com').trim();
 
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
