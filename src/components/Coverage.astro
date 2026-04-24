@@ -75,20 +75,277 @@ const C = t.coverage;
       </div>
     </div>
 
-    <!-- CVM section -->
-    <div class="feat-big" style="margin-top:var(--gap);">
-      <div>
-        <div class="cov-icon" style="width:48px;height:48px;border-radius:12px;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <!-- CVM section (expanded with AI sentiment + example + JSON) -->
+    <div class="cvm-block" style="margin-top:var(--gap);">
+      <div class="cvm-head">
+        <div class="cvm-head-top">
+          <div class="cov-icon" style="width:48px;height:48px;border-radius:12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          {C.p2_chip && (
+            <span class="chip" style="background:var(--accent);color:var(--accent-fg);border-color:var(--accent);">
+              <span class="chip-dot" style="background:var(--accent-fg);"></span>{C.p2_chip}
+            </span>
+          )}
         </div>
         <h3 style="margin-top:16px;font-size:26px;">{C.p2_title}</h3>
-        <p style="font-size:15px;margin-top:10px;max-width:520px;line-height:1.6;">{C.p2_desc}</p>
+        <p style="font-size:15px;margin-top:10px;max-width:820px;line-height:1.6;">{C.p2_desc}</p>
       </div>
-      <div>
-        <ul class="bullet-list" style="margin:0;">
-          {C.p2_bullets.map((b) => <li>{b}</li>)}
-        </ul>
+
+      <div class="cvm-grid">
+        <div class="cvm-col">
+          <div class="cvm-col-label mono">FEATURES</div>
+          <ul class="bullet-list cvm-bullets">
+            {C.p2_bullets.map((b, i) => (
+              <li class={i === C.p2_bullets.length - 1 ? 'is-ai' : ''}>{b}</li>
+            ))}
+          </ul>
+        </div>
+
+        {C.p2_example && (
+          <div class="cvm-col">
+            <div class="cvm-col-label mono">EXEMPLO LIVE</div>
+            <article class="cvm-doc">
+              <div class="cvm-doc-head mono">{C.p2_example.header}</div>
+              <p class="cvm-doc-excerpt">{C.p2_example.excerpt}</p>
+              <div class="cvm-sent">
+                <div class="cvm-sent-row">
+                  <span class="mono cvm-sent-val">{C.p2_example.sentiment_value}</span>
+                  <span class="cvm-sent-label">{C.p2_example.sentiment_label}</span>
+                </div>
+                <div class="cvm-sent-bar" aria-hidden="true"><div class="cvm-sent-fill" style="width:82%"></div></div>
+              </div>
+              <div class="cvm-meta-row">
+                <span class="mono cvm-meta-label">{C.p2_example.topics_label}:</span>
+                {C.p2_example.topics.map((tp) => (
+                  <span class="cvm-pill">{tp}</span>
+                ))}
+              </div>
+              <div class="cvm-meta-row">
+                <span class="mono cvm-meta-label">{C.p2_example.impact_label}:</span>
+                <span class="cvm-pill cvm-pill-strong">{C.p2_example.impact}</span>
+              </div>
+            </article>
+            <p class="cvm-tagline">{C.p2_example.tagline}</p>
+          </div>
+        )}
+
+        <div class="cvm-col">
+          <div class="cvm-col-label mono">PAYLOAD JSON</div>
+          <pre class="cvm-json"><code>{`{
+  "type": "fato_relevante",
+  "ticker": "PETR4",
+  "company": "Petróleo Brasileiro",
+  "published_at": "2026-04-24T09:42:18Z",
+  "source": "cvm_ipe",
+  "ai": {
+    "sentiment": 0.82,
+    "sentiment_label": "positive",
+    "topics": [
+      "dividendo",
+      "retorno_acionista",
+      "capital_allocation"
+    ],
+    "impact": "high",
+    "confidence": 0.94
+  },
+  "document_url": "https://…",
+  "excerpt": "…"
+}`}</code></pre>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .cvm-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: clamp(24px, 4vw, 40px);
+  }
+  .cvm-head-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cvm-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+    align-items: start;
+  }
+  .cvm-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cvm-col-label {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    font-weight: 500;
+  }
+  .cvm-bullets {
+    margin: 0;
+  }
+  .cvm-bullets li.is-ai {
+    color: var(--fg);
+    font-weight: 500;
+    position: relative;
+  }
+  .cvm-bullets li.is-ai::before {
+    content: "★";
+    color: var(--accent);
+    margin-right: 6px;
+  }
+
+  /* Live example doc card */
+  .cvm-doc {
+    background: color-mix(in oklab, var(--bg) 94%, var(--fg) 6%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cvm-doc-head {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+  }
+  .cvm-doc-excerpt {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--fg);
+    margin: 0;
+  }
+  .cvm-sent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+  .cvm-sent-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .cvm-sent-val {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .cvm-sent-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .cvm-sent-bar {
+    height: 6px;
+    background: color-mix(in oklab, var(--accent) 14%, transparent);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .cvm-sent-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+  .cvm-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .cvm-meta-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .cvm-pill {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 8%, transparent);
+    border: 1px solid color-mix(in oklab, var(--accent) 24%, var(--border) 76%);
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .cvm-pill-strong {
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-color: var(--accent);
+  }
+  .cvm-tagline {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg-subtle);
+    margin: 4px 0 0;
+  }
+
+  /* JSON payload preview */
+  .cvm-json {
+    background: #0f1514;
+    color: #e6efec;
+    border: 1px solid #1b2322;
+    border-radius: 14px;
+    padding: 16px 18px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
+    margin: 0;
+    overflow: auto;
+    max-height: 420px;
+    white-space: pre;
+  }
+  .cvm-json code {
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+  }
+
+  /* Tablet: 2 cols + json na linha de baixo cheia */
+  @media (max-width: 1100px) {
+    .cvm-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .cvm-col:nth-child(3) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Mobile: 1 col stacked */
+  @media (max-width: 767px) {
+    .cvm-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .cvm-col:nth-child(3) {
+      grid-column: auto;
+    }
+    .cvm-json {
+      font-size: 11.5px;
+      padding: 14px;
+      max-height: 320px;
+    }
+  }
+</style>
