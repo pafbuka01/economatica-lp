@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco News API - Economatica</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-alt: #121212;
+      --bg-raised: #1a1a1a;
+      --fg: #ffffff;
+      --fg-muted: #b0b0b0;
+      --fg-subtle: #808080;
+      --border: #2a2a2a;
+      --border-strong: #3a3a3a;
+      --accent: #3b82f6;
+      --accent-dark: #1e40af;
+      --positive: #10b981;
+      --negative: #ef4444;
+      --neutral: #6b7280;
+      --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--fg);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .logo-sub {
+      color: var(--fg-muted);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--fg);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lang-selector {
+      position: relative;
+    }
+
+    .lang-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .lang-trigger:hover {
+      color: var(--fg);
+      border-color: var(--border-strong);
+    }
+
+    .lang-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 160px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      padding: 6px;
+      z-index: 60;
+    }
+
+    .lang-menu.open {
+      display: block;
+    }
+
+    .lang-option {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--fg-muted);
+      text-decoration: none;
+      transition: all 0.12s ease;
+      text-align: left;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .lang-option:hover {
+      background: var(--bg-alt);
+      color: var(--fg);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-alt);
+      border-color: var(--border-strong);
+    }
+
+    .btn-sm {
+      padding: 6px 16px;
+      font-size: 13px;
+    }
+
+    .btn-lg {
+      padding: 12px 32px;
+      font-size: 15px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 18px 0;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      margin: 24px 0;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-meta-item .num {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero-meta-item .lbl {
+      font-size: 12px;
+      color: var(--fg-muted);
+      margin-top: 4px;
+    }
+
+    /* Code Block */
+    .code {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--fg-muted);
+    }
+
+    .code-file {
+      font-size: 12px;
+      color: var(--fg-muted);
+      font-family: 'Monaco', 'Menlo', monospace;
+    }
+
+    .code-body {
+      padding: 16px;
+      background: var(--bg-raised);
+      overflow-x: auto;
+    }
+
+    .code-body pre {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--fg);
+    }
+
+    /* Section */
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head {
+      margin-bottom: 48px;
+    }
+
+    .section-head p {
+      font-size: 16px;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* Features Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .feat-card {
+      padding: 24px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .feat-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-raised);
+    }
+
+    .feat-card .icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .feat-card p {
+      font-size: 14px;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    /* Use Cases */
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .usecase-card {
+      padding: 32px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .usecase-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-raised);
+    }
+
+    .usecase-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .usecase-card p {
+      font-size: 14px;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 16px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--bg-raised);
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table .feature-name {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .comparison-table .check {
+      color: var(--positive);
+      font-weight: 600;
+    }
+
+    .comparison-table .cross {
+      color: var(--negative);
+    }
+
+    /* FAQ */
+    .faq-item {
+      padding: 24px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: var(--accent);
+      background: var(--bg-raised);
+    }
+
+    .faq-question {
+      font-weight: 600;
+      color: var(--fg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-toggle {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--fg-muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-alt);
+      color: var(--fg);
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--bg-raised);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 12px 32px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .form-submit:hover {
+      background: var(--accent-dark);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      margin-bottom: 16px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 12px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--fg);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+
+    /* Trust Bar */
+    .trust-bar {
+      background: var(--bg-alt);
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .trust-text {
+      font-size: 14px;
+      color: var(--fg-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .usecase-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#top">
+        <span style="font-weight: 700; font-size: 18px;">🔴</span>
+        <div>
+          <div>Economatica</div>
+          <div class="logo-sub">News API</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#playground">Produto</a>
+        <a href="#coverage">Cobertura</a>
+        <a href="#usecases">Casos de uso</a>
+        <a href="#docs" target="_blank">Documentação</a>
+        <a href="#contact">Comercial</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-trigger" id="lang-trigger">PT ▼</button>
+          <div class="lang-menu" id="lang-menu">
+            <button class="lang-option" onclick="alert('Português já selecionado')">PT - Português</button>
+            <button class="lang-option" onclick="alert('Função de tradução para EN')">EN - English</button>
+            <button class="lang-option" onclick="alert('Função de tradução para ES')">ES - Español</button>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary btn-sm">Falar com vendas</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Eco News API · Nova era Economatica</div>
+        <h1>Jornalismo financeiro proprietário entregue via API.</h1>
+        <p class="hero-sub">Cobertura editorial proprietária, estruturada para integração em produtos financeiros, plataformas e workflows institucionais.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary btn-lg">Falar com vendas</a>
+          <a href="#docs" class="btn btn-ghost btn-lg" target="_blank">Ler a documentação →</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="num">&lt; 100ms</span>
+            <span class="lbl">Latência p95</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="num">99.95%</span>
+            <span class="lbl">SLA uptime</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="num">REST + WS</span>
+            <span class="lbl">Entrega</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="num">40 anos</span>
+            <span class="lbl">de dados financeiros</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="code">
+          <div class="code-head">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="code-dots"><span></span><span></span><span></span></div>
+              <span class="code-file">request.js</span>
+            </div>
+            <span style="font-size: 10px; color: var(--fg-muted);">● HMAC auth</span>
+          </div>
+          <div class="code-body">
+            <pre>// Requisição autenticada com HMAC-SHA256
+const url = 'https://api.econews.economatica.com/v1/news?ticker=PETR4&size=5';
+
+const res = await fetch(url, {
+  headers: {
+    'x-api-key': process.env.ECO_API_KEY,
+    'x-timestamp': timestamp,
+    'x-signature': signature,
+  },
+});
+
+const data = await res.json();</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <div class="trust-bar">
+    <div class="container">
+      <p class="trust-text">Construído pela Economatica · infraestrutura de dados usada por<br><strong>maiores instituições financeiras do Brasil</strong></p>
+    </div>
+  </div>
+
+  <!-- Playground Section -->
+  <section id="playground">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Playground ao vivo</div>
+        <h2>Conteúdo estruturado, não apenas um feed.</h2>
+        <p>Cada notícia vem com tickers, setor, tema, idioma e score de sentimento. Filtre por caso de uso, assine endpoints específicos e consuma via REST ou WebSocket.</p>
+      </div>
+      <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; color: var(--fg-muted);">
+        <p style="margin-bottom: 16px;">📊 Playground interativo com stream de notícias ao vivo</p>
+        <p style="font-size: 13px;">Clique em uma notícia para ver o payload JSON completo com metadados estruturados</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Section -->
+  <section id="coverage">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Cobertura editorial</div>
+        <h2>Cobertura editorial especializada, entregue via API.</h2>
+        <p>A Eco News API não é apenas um agregador. É uma operação editorial própria, com jornalistas especializados entregando contexto, precisão e velocidade de terminal para produtos institucionais.</p>
+      </div>
+
+      <div style="margin-top: 48px; padding: 32px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+          <div>
+            <h3>📰 Redação Mover</h3>
+            <p style="color: var(--fg-muted); font-size: 14px; margin-top: 8px;">Redação focada em mercado financeiro, com jornalistas veteranos cobrindo em tempo real tudo o que move preço de ativos.</p>
+          </div>
+          <span style="background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">Cobertura Própria</span>
+        </div>
+        <ul style="list-style: none; color: var(--fg-muted); font-size: 14px; line-height: 1.8; margin-top: 16px;">
+          <li>✓ Principais eventos diários do mercado brasileiro</li>
+          <li>✓ Mais de 80 indicadores econômicos do Brasil e do G7</li>
+          <li>✓ Fatos corporativos: resultados, M&A, follow-ons, ratings</li>
+          <li>✓ Eventos políticos com impacto direto sobre ativos</li>
+          <li>✓ Notícias urgentes: alertas de alto impacto em segundos</li>
+        </ul>
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">180+</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Manchetes/dia</div>
+          </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">&lt; 12s</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Urgente → API</div>
+          </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">80+</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Indicadores BR+G7</div>
+          </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">24/7</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Cobertura ao vivo</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 32px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 24px;">
+          <div>
+            <h3>📊 Agregação das principais fontes</h3>
+            <p style="color: var(--fg-muted); font-size: 14px; margin-top: 8px;">Além do noticiário proprietário, a API consolida e estrutura as principais fontes em um único feed.</p>
+          </div>
+          <span style="background: rgba(107, 114, 128, 0.1); color: var(--neutral); padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;">Agregação</span>
+        </div>
+        <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">50+</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Fontes locais e internacionais</div>
+          </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">800+</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Notícias agregadas/dia</div>
+          </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--accent);">24/7</div>
+            <div style="font-size: 12px; color: var(--fg-muted); margin-top: 4px;">Pipeline de ingestão</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Features</div>
+        <h2>Uma superfície técnica pensada para engenharia institucional.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="feat-card">
+          <div class="icon">📋</div>
+          <h4>Metadados ricos</h4>
+          <p>Headline, resumo ou corpo completo, conforme o escopo contratado, sempre com tickers, setor, tema e idioma.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">💭</div>
+          <h4>Score de sentimento</h4>
+          <p>Cada notícia chega com score de sentimento classificado automaticamente para alimentar seus modelos.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🎯</div>
+          <h4>Filtros nativos</h4>
+          <p>Ticker, setor, tema, idioma e relevância. Reduza ruído no edge antes dos dados chegarem ao seu stack.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🔌</div>
+          <h4>REST + WebSocket</h4>
+          <p>Consuma por pull em REST ou streaming em WebSocket em planos institucionais.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">📈</div>
+          <h4>Histórico consultável</h4>
+          <p>Backtest de sinais, reprocessamento e auditoria, com histórico acessível por API.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🔒</div>
+          <h4>Governança & observabilidade</h4>
+          <p>API keys por ambiente, rate limits configuráveis, logs de consumo e alertas de quota.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section id="usecases">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Casos de uso</div>
+        <h2>Uma API. Três frentes críticas.</h2>
+      </div>
+      <div class="usecase-grid">
+        <div class="usecase-card">
+          <div class="usecase-tag">Buy-side · Sell-side</div>
+          <h3>Research & desk institucional</h3>
+          <p>Alertas, monitoramento de eventos e dossiês por emissor diretamente nos workflows internos de research.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-tag">Fintechs</div>
+          <h3>Produtos B2B2C</h3>
+          <p>Distribua conteúdo financeiro em apps, home broker e produtos digitais sob contrato de redistribuição.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-tag">Portais & mídia</div>
+          <h3>Dashboards institucionais</h3>
+          <p>Conteúdo estruturado para portais, dashboards e canais próprios com SLA profissional.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-tag">Plataformas</div>
+          <h3>Workflows & alertas</h3>
+          <p>Pipelines de notícia como sinal: sentimento, relevância e classificação prontos para entrar em modelos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section id="compare">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Comparação</div>
+        <h2>Por que não é um wire tradicional.</h2>
+      </div>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th style="width: 40%;">Feature</th>
+            <th style="width: 30%;">Eco News API</th>
+            <th style="width: 30%;">Wire tradicional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Conteúdo estruturado com metadados</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Não</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Classificação por ticker, setor e tema</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Parcial</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Score de sentimento embutido</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Não</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Plantão CVM & monitoramento CVM 44</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Não</td>
+          </tr>
+          <tr>
+            <td class="feature-name">REST + WebSocket nativos</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Proprietário</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Histórico consultável via API</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Separado</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Contrato B2B2C / redistribuição</td>
+            <td class="check">✓ Sim</td>
+            <td class="cross">✗ Limitado</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Tempo de integração</td>
+            <td class="check" style="color: var(--positive);">Horas</td>
+            <td class="cross" style="color: var(--negative);">Meses</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Perguntas frequentes.</h2>
+      </div>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Como funciona a precificação?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Contratos são construídos com o time comercial a partir do caso de uso: volume de chamadas, janela histórica, número de usuários finais e tipo de uso (interno ou redistributivo). Sem preço de prateleira.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Quais planos suportam WebSocket?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Streaming em WebSocket está disponível em planos institucionais e para redistribuição. O plano inicial entrega via REST com long-polling opcional.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Posso redistribuir as notícias no meu app?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Sim, mediante contrato de redistribuição específico. A camada mais nobre de inteligência editorial permanece exclusiva da Economatica.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Como é calculado o sentimento?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Score proprietário treinado sobre o histórico editorial da Economatica, com classificação em positivo, negativo e neutro, além de intensidade.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Qual a janela de histórico disponível?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Histórico consultável via API com profundidade negociada em contrato. Casos com backtest de modelos têm pacotes dedicados.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Existe ambiente de sandbox?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Sim. Após qualificação comercial, fornecemos chaves de sandbox com dados sintéticos representativos para integração.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Comercial</div>
+        <h2>Solicite uma proposta para sua operação</h2>
+        <p>Nosso time comercial retorna em até 1 dia útil com um escopo preliminar, próximos passos de integração e acesso à sandbox.</p>
+      </div>
+
+      <div style="max-width: 600px; margin: 0 auto;">
+        <form class="contact-form" onsubmit="submitForm(event)">
+          <div class="form-group">
+            <label for="email">E-mail corporativo</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="company">Empresa</label>
+            <input type="text" id="company" name="company" required>
+          </div>
+
+          <div class="form-group">
+            <label for="role">Cargo</label>
+            <input type="text" id="role" name="role" required>
+          </div>
+
+          <div class="form-group">
+            <label for="size">Tamanho da empresa</label>
+            <select id="size" name="size" required>
+              <option value="">Selecione...</option>
+              <option value="1-50">1–50</option>
+              <option value="50-250">50–250</option>
+              <option value="250-1000">250–1000</option>
+              <option value="1000+">1000+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="segment">Segmento</label>
+            <select id="segment" name="segment" required>
+              <option value="">Selecione...</option>
+              <option value="buy-side">Buy-side</option>
+              <option value="sell-side">Sell-side</option>
+              <option value="fintech">Fintech</option>
+              <option value="media">Mídia</option>
+              <option value="other">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="integration">Tipo de integração</label>
+            <select id="integration" name="integration" required>
+              <option value="">Selecione...</option>
+              <option value="rest">REST</option>
+              <option value="websocket">WebSocket</option>
+              <option value="redistribution">Redistribuição</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Telefone</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+
+          <div class="form-group">
+            <label for="usecase">Caso de uso</label>
+            <textarea id="usecase" name="usecase" placeholder="Conte brevemente: o que você pretende construir?" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Solicitar contato comercial</button>
+        </form>
+        <p style="text-align: center; color: var(--fg-muted); font-size: 13px; margin-top: 16px;" id="form-message"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <a href="#playground">Playground</a>
+          <a href="#coverage">Cobertura</a>
+          <a href="#compare">vs. Wires</a>
+          <a href="#contact">Comercial</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="#">Sobre</a>
+          <a href="#">Blog</a>
+          <a href="#">Contato</a>
+          <a href="#">Status</a>
+        </div>
+        <div class="footer-col">
+          <h4>Desenvolvedores</h4>
+          <a href="#docs" target="_blank">Referência da API</a>
+          <a href="#">SDKs</a>
+          <a href="#">Status</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Segurança</a>
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Serviço</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Economatica. Todos os direitos reservados.</p>
+        <p style="margin-top: 12px; font-size: 12px;">v1.0 · api.econews.economatica.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation scroll effect
+    function handleNavScroll() {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 12) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+    // Language dropdown
+    document.getElementById('lang-trigger').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('lang-menu').classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      document.getElementById('lang-menu').classList.remove('open');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('lang-menu').classList.remove('open');
+      }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // FAQ toggle
+    function toggleFaq(element) {
+      element.classList.toggle('open');
+    }
+
+    // Form submission
+    function submitForm(e) {
+      e.preventDefault();
+      const message = document.getElementById('form-message');
+      message.textContent = '✓ Recebido. Nosso time responde em até 1 dia útil.';
+      message.style.color = 'var(--positive)';
+      setTimeout(() => {
+        e.target.reset();
+        message.textContent = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
