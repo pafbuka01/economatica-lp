@@ -19,7 +19,7 @@ export const dict = {
     playground: {
       eyebrow: 'Playground ao vivo',
       h2: 'Conteúdo estruturado, não apenas um feed.',
-      sub: 'Cada notícia vem com tickers, setor, tema, idioma e sentimento por IA. Filtre por caso de uso, assine endpoints específicos e consuma via REST ou WebSocket.',
+      sub: 'Cada notícia vem com tickers, setor, tema, idioma e score de sentimento. Filtre por caso de uso, assine endpoints específicos e consuma via REST ou WebSocket.',
       tickers: 'Tickers', sectors: 'Setores', themes: 'Temas', langs: 'Idiomas', sentiment: 'Sentimento',
       all: 'Todos', pos: 'Positivo', neg: 'Negativo', neu: 'Neutro',
       showing: 'Exibindo', events: 'eventos', live: 'Ao vivo', paused: 'Pausado',
@@ -58,9 +58,9 @@ export const dict = {
         { t: '06:08:11', tag: 'POLÍTICA',h: 'Relator apresenta substitutivo da reforma tributária com regime especial para financeiro' },
       ],
       p2_title: 'Documentos oficiais CVM via API',
-      p2_chip: 'IA proprietária',
-      p2_desc: 'Além das notícias, a API entrega integração direta com documentos oficiais protocolados na CVM. Fatos relevantes, resultados, transações de insider (CVM 44) e eventos societários, estruturados e prontos para consumo programático. Cada documento ainda é processado por IA proprietária que extrai score de sentimento, tópicos-chave e impacto esperado, entregando contexto no mesmo payload.',
-      p2_bullets: [ 'Fatos relevantes de companhias abertas', 'Resultados trimestrais e anuais (ITR, DFP)', 'Transações de insiders e controladores (CVM 44)', 'Documentos de ofertas, follow-ons e M&A', 'Avisos aos acionistas e comunicados ao mercado', 'Monitoramento contínuo com alerta em tempo real', 'Score de sentimento e tópicos-chave via IA (diferencial único)' ],
+      p2_chip: 'Score proprietário',
+      p2_desc: 'Além das notícias, a API entrega integração direta com documentos oficiais protocolados na CVM. Fatos relevantes, resultados, transações de insider (CVM 44) e eventos societários, estruturados e prontos para consumo programático. Cada documento ainda é enriquecido com score de sentimento, tópicos-chave e impacto esperado, entregando contexto no mesmo payload.',
+      p2_bullets: [ 'Fatos relevantes de companhias abertas', 'Resultados trimestrais e anuais (ITR, DFP)', 'Transações de insiders e controladores (CVM 44)', 'Documentos de ofertas, follow-ons e M&A', 'Avisos aos acionistas e comunicados ao mercado', 'Monitoramento contínuo com alerta em tempo real', 'Score de sentimento e tópicos-chave (diferencial único)' ],
       p2_example: {
         tagline: 'A API não devolve só o documento. Devolve interpretação.',
         header: 'PETR4 · 09:42 · FATO RELEVANTE',
@@ -78,7 +78,7 @@ export const dict = {
       h2: 'Uma superfície técnica pensada para engenharia institucional.',
       items: [
         { t: 'Metadados ricos', d: 'Headline, resumo ou corpo completo, conforme o escopo contratado, sempre com tickers, setor, tema e idioma.' },
-        { t: 'Sentimento por IA', d: 'Cada notícia chega com score de sentimento classificado automaticamente para alimentar seus modelos.' },
+        { t: 'Score de sentimento', d: 'Cada notícia chega com score de sentimento classificado automaticamente para alimentar seus modelos.' },
         { t: 'Filtros nativos', d: 'Ticker, setor, tema, idioma e relevância. Reduza ruído no edge antes dos dados chegarem ao seu stack.' },
         { t: 'REST + WebSocket', d: 'Consuma por pull em REST ou streaming em WebSocket em planos institucionais.' },
         { t: 'Histórico consultável', d: 'Backtest de sinais, reprocessamento e auditoria, com histórico acessível por API.' },
@@ -108,7 +108,7 @@ export const dict = {
       rows: [
         ['Conteúdo estruturado com metadados', true, false],
         ['Classificação por ticker, setor e tema', true, 'Parcial'],
-        ['Sentimento por IA embutido', true, false],
+        ['Score de sentimento embutido', true, false],
         ['Plantão CVM & monitoramento CVM 44', true, false],
         ['REST + WebSocket nativos', true, 'Proprietário'],
         ['Histórico consultável via API', true, 'Separado'],
@@ -180,7 +180,7 @@ export const dict = {
     playground: {
       eyebrow: 'Live playground',
       h2: 'Structured content, not just a feed.',
-      sub: 'Every article arrives with tickers, sector, theme, language and AI sentiment. Filter by use case, subscribe to specific endpoints and consume via REST or WebSocket.',
+      sub: 'Every article arrives with tickers, sector, theme, language and sentiment score. Filter by use case, subscribe to specific endpoints and consume via REST or WebSocket.',
       tickers: 'Tickers', sectors: 'Sectors', themes: 'Themes', langs: 'Languages', sentiment: 'Sentiment',
       all: 'All', pos: 'Positive', neg: 'Negative', neu: 'Neutral',
       showing: 'Showing', events: 'events', live: 'Live', paused: 'Paused',
@@ -219,9 +219,9 @@ export const dict = {
         { t: '06:08:11', tag: 'POLICY',  h: 'Rapporteur releases tax-reform substitute with special financial-sector regime' },
       ],
       p2_title: 'Official CVM filings via API',
-      p2_chip: 'Proprietary AI',
-      p2_desc: 'Beyond news, the API delivers direct integration with official documents filed with the CVM. Material facts, earnings releases, insider transactions (CVM 44) and other corporate events, structured and ready for programmatic consumption. Each document is also processed by proprietary AI that extracts sentiment score, key topics and expected impact, delivering context in the same payload.',
-      p2_bullets: ['Material facts from public companies', 'Quarterly and annual earnings (ITR, DFP)', 'Insider and controller transactions (CVM 44)', 'Offering documents, follow-ons and M&A filings', 'Shareholder notices and market communications', 'Continuous monitoring with real-time alerts', 'AI-powered sentiment score and key topics (unique differentiator)'],
+      p2_chip: 'Proprietary score',
+      p2_desc: 'Beyond news, the API delivers direct integration with official documents filed with the CVM. Material facts, earnings releases, insider transactions (CVM 44) and other corporate events, structured and ready for programmatic consumption. Each document is also enriched with sentiment score, key topics and expected impact, delivering context in the same payload.',
+      p2_bullets: ['Material facts from public companies', 'Quarterly and annual earnings (ITR, DFP)', 'Insider and controller transactions (CVM 44)', 'Offering documents, follow-ons and M&A filings', 'Shareholder notices and market communications', 'Continuous monitoring with real-time alerts', 'Sentiment score and key topics (unique differentiator)'],
       p2_example: {
         tagline: 'The API does not return just the document. It returns interpretation.',
         header: 'PETR4 · 09:42 · MATERIAL FACT',
@@ -239,7 +239,7 @@ export const dict = {
       h2: 'A surface designed for institutional engineering.',
       items: [
         { t: 'Rich metadata', d: 'Headline, summary or full body, per contract scope, always with tickers, sector, theme and language.' },
-        { t: 'AI sentiment', d: 'Each article ships with an automatically-classified sentiment score to feed your models.' },
+        { t: 'Sentiment score', d: 'Each article ships with an automatically-classified sentiment score to feed your models.' },
         { t: 'Native filters', d: 'Ticker, sector, theme, language and relevance. Cut noise at the edge before data reaches your stack.' },
         { t: 'REST + WebSocket', d: 'Pull via REST or subscribe via WebSocket on institutional plans.' },
         { t: 'Queryable history', d: 'Signal backtests, reprocessing and audit, with history accessible through the API.' },
@@ -269,7 +269,7 @@ export const dict = {
       rows: [
         ['Structured content with metadata', true, false],
         ['Ticker, sector and theme classification', true, 'Partial'],
-        ['Built-in AI sentiment', true, false],
+        ['Built-in sentiment score', true, false],
         ['CVM watch & CVM 44 monitoring', true, false],
         ['Native REST + WebSocket', true, 'Proprietary'],
         ['Queryable history via API', true, 'Separate'],
@@ -341,7 +341,7 @@ export const dict = {
     playground: {
       eyebrow: 'Playground en vivo',
       h2: 'Contenido estructurado, no solo un feed.',
-      sub: 'Cada noticia llega con tickers, sector, tema, idioma y sentimiento por IA. Filtra por caso de uso, suscribe endpoints específicos y consume vía REST o WebSocket.',
+      sub: 'Cada noticia llega con tickers, sector, tema, idioma y score de sentimiento. Filtra por caso de uso, suscribe endpoints específicos y consume vía REST o WebSocket.',
       tickers: 'Tickers', sectors: 'Sectores', themes: 'Temas', langs: 'Idiomas', sentiment: 'Sentimiento',
       all: 'Todos', pos: 'Positivo', neg: 'Negativo', neu: 'Neutro',
       showing: 'Mostrando', events: 'eventos', live: 'En vivo', paused: 'Pausado',
@@ -380,9 +380,9 @@ export const dict = {
         { t: '06:08:11', tag: 'POLÍTICA',h: 'Relator presenta sustitutivo de reforma tributaria con régimen especial financiero' },
       ],
       p2_title: 'Documentos oficiales CVM via API',
-      p2_chip: 'IA propietaria',
-      p2_desc: 'Además de las noticias, la API entrega integración directa con documentos oficiales protocolados en la CVM. Hechos relevantes, resultados, transacciones de insiders (CVM 44) y eventos societarios, estructurados y listos para consumo programático. Cada documento también es procesado por IA propietaria que extrae score de sentimiento, tópicos clave e impacto esperado, entregando contexto en el mismo payload.',
-      p2_bullets: ['Hechos relevantes de compañías abiertas', 'Resultados trimestrales y anuales (ITR, DFP)', 'Transacciones de insiders y controladores (CVM 44)', 'Documentos de ofertas, follow-ons y M&A', 'Avisos a accionistas y comunicados al mercado', 'Monitoreo continuo con alerta en tiempo real', 'Score de sentimiento y tópicos clave vía IA (diferencial único)'],
+      p2_chip: 'Score propietario',
+      p2_desc: 'Además de las noticias, la API entrega integración directa con documentos oficiales protocolados en la CVM. Hechos relevantes, resultados, transacciones de insiders (CVM 44) y eventos societarios, estructurados y listos para consumo programático. Cada documento también es enriquecido con score de sentimiento, tópicos clave e impacto esperado, entregando contexto en el mismo payload.',
+      p2_bullets: ['Hechos relevantes de compañías abiertas', 'Resultados trimestrales y anuales (ITR, DFP)', 'Transacciones de insiders y controladores (CVM 44)', 'Documentos de ofertas, follow-ons y M&A', 'Avisos a accionistas y comunicados al mercado', 'Monitoreo continuo con alerta en tiempo real', 'Score de sentimiento y tópicos clave (diferencial único)'],
       p2_example: {
         tagline: 'La API no devuelve solo el documento. Devuelve interpretación.',
         header: 'PETR4 · 09:42 · HECHO RELEVANTE',
@@ -400,7 +400,7 @@ export const dict = {
       h2: 'Superficie técnica pensada para ingeniería institucional.',
       items: [
         { t: 'Metadatos ricos', d: 'Titular, resumen o cuerpo completo, según el contrato, siempre con tickers, sector, tema e idioma.' },
-        { t: 'Sentimiento por IA', d: 'Cada noticia llega con un score de sentimiento clasificado automáticamente para alimentar tus modelos.' },
+        { t: 'Score de sentimiento', d: 'Cada noticia llega con un score de sentimiento clasificado automáticamente para alimentar tus modelos.' },
         { t: 'Filtros nativos', d: 'Ticker, sector, tema, idioma y relevancia. Reduce ruido antes de que los datos lleguen a tu stack.' },
         { t: 'REST + WebSocket', d: 'Consume por pull en REST o streaming por WebSocket en planes institucionales.' },
         { t: 'Histórico consultable', d: 'Backtest de señales, reprocesamiento y auditoría, con histórico accesible por API.' },
@@ -430,7 +430,7 @@ export const dict = {
       rows: [
         ['Contenido estructurado con metadatos', true, false],
         ['Clasificación por ticker, sector y tema', true, 'Parcial'],
-        ['Sentimiento por IA integrado', true, false],
+        ['Score de sentimiento integrado', true, false],
         ['Vigilancia CVM & CVM 44', true, false],
         ['REST + WebSocket nativos', true, 'Propietario'],
         ['Histórico consultable vía API', true, 'Separado'],

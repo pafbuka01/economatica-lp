@@ -75,7 +75,7 @@ const C = t.coverage;
       </div>
     </div>
 
-    <!-- CVM section (expanded with AI sentiment + example + JSON) -->
+    <!-- CVM section (expanded with sentiment score + example + JSON) -->
     <div class="cvm-block" style="margin-top:var(--gap);">
       <div class="cvm-head">
         <div class="cvm-head-top">
@@ -97,7 +97,7 @@ const C = t.coverage;
           <div class="cvm-col-label mono">FEATURES</div>
           <ul class="bullet-list cvm-bullets">
             {C.p2_bullets.map((b, i) => (
-              <li class={i === C.p2_bullets.length - 1 ? 'is-ai' : ''}>{b}</li>
+              <li class={i === C.p2_bullets.length - 1 ? 'is-highlight' : ''}>{b}</li>
             ))}
           </ul>
         </div>
@@ -138,7 +138,7 @@ const C = t.coverage;
   "company": "Petróleo Brasileiro",
   "published_at": "2026-04-24T09:42:18Z",
   "source": "cvm_ipe",
-  "ai": {
+  "insights": {
     "sentiment": 0.82,
     "sentiment_label": "positive",
     "topics": [
@@ -192,12 +192,12 @@ const C = t.coverage;
   .cvm-bullets {
     margin: 0;
   }
-  .cvm-bullets li.is-ai {
+  .cvm-bullets li.is-highlight {
     color: var(--fg);
     font-weight: 500;
     position: relative;
   }
-  .cvm-bullets li.is-ai::before {
+  .cvm-bullets li.is-highlight::before {
     content: "★";
     color: var(--accent);
     margin-right: 6px;
