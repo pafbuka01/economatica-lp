@@ -87,7 +87,7 @@ export const dict = {
     },
     examples: {
       eyebrow: 'Integração',
-      h2: 'Em produção em horas, não em trimestres.',
+      h2: 'Em produção em dias, não em trimestres.',
       sub: 'Auth por API key, SDKs nas principais linguagens e um modelo de dados estável. Documentação pensada para engenharia.',
     },
     usecases: {
