@@ -263,8 +263,8 @@ section:first-of-type { border-top: none; }
 .hero-meta {
   display: grid;
   grid-template-columns: repeat(4, max-content);
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: start;
+  gap: 32px;
   margin-top: 40px;
   padding-top: 28px;
   border-top: 1px solid var(--border);
@@ -307,7 +307,7 @@ section:first-of-type { border-top: none; }
 .hero-viz {
   position: relative;
   perspective: 1200px;
-  transform: translate(-20px, -20px);
+  transform: translate(-45px, -20px);
 }
 .viz-code {
   position: relative;
