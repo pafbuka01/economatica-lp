@@ -307,7 +307,7 @@ section:first-of-type { border-top: none; }
 .hero-viz {
   position: relative;
   perspective: 1200px;
-  transform: translate(-45px, -20px);
+  transform: translate(5px, -20px);
 }
 .viz-code {
   position: relative;
