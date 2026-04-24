@@ -250,7 +250,7 @@ section:first-of-type { border-top: none; }
 .hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 64px;
   align-items: center;
 }
@@ -309,6 +309,8 @@ section:first-of-type { border-top: none; }
   z-index: 2;
   transform: rotate(-0.5deg);
   box-shadow: var(--shadow-lg);
+  width: 70%;
+  margin-left: auto;
 }
 .viz-stream {
   position: absolute;
@@ -325,7 +327,7 @@ section:first-of-type { border-top: none; }
 }
 @media (max-width: 700px) {
   .viz-stream { position: relative; right: 0; bottom: 0; width: 100%; margin-top: 16px; transform: none; }
-  .viz-code { transform: none; }
+  .viz-code { transform: none; width: 100%; margin-left: 0; }
 }
 .viz-stream-head {
   display: flex;
