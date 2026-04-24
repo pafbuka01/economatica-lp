@@ -44,11 +44,18 @@ export const POST: APIRoute = async ({ request }) => {
       html,
     });
 
-    console.log('[contact] lead emailed', { name, email, company, result });
+    if (result.error) {
+      console.error('[contact] resend returned error', {
+        name, email, company, from: resendFrom, to: contactTo, error: result.error,
+      });
+      return json({ ok: false, error: 'email_send_failed', detail: result.error }, 500);
+    }
+
+    console.log('[contact] lead emailed', { name, email, company, id: result.data?.id });
     return json({ ok: true, id: result.data?.id ?? null });
   } catch (error) {
-    console.error('[contact] resend error', error);
-    return json({ ok: false, error: 'email_send_failed' }, 500);
+    console.error('[contact] resend threw', error);
+    return json({ ok: false, error: 'email_send_failed', detail: String(error) }, 500);
   }
 };
 
