@@ -5,7 +5,10 @@ export const prerender = false;
 
 const resendApiKey = import.meta.env.RESEND_API_KEY;
 const resendFrom = import.meta.env.RESEND_FROM || 'Economatica <onboarding@resend.dev>';
-const contactTo = (import.meta.env.CONTACT_TO || 'pafbuka01@gmail.com').trim();
+const contactTo = (import.meta.env.CONTACT_TO || 'pafbuka01@gmail.com')
+  .split(',')
+  .map((addr: string) => addr.trim())
+  .filter(Boolean);
 
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
@@ -35,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const result = await resend.emails.send({
       from: resendFrom,
-      to: [contactTo],
+      to: contactTo,
       replyTo: email,
       subject,
       html,
