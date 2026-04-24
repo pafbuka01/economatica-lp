@@ -60,7 +60,7 @@ export const dict = {
       p2_title: 'Documentos oficiais CVM via API',
       p2_chip: 'Score proprietário',
       p2_desc: 'Além das notícias, a API entrega integração direta com documentos oficiais protocolados na CVM. Fatos relevantes, resultados, transações de insider (CVM 44) e eventos societários, estruturados e prontos para consumo programático. Cada documento ainda é enriquecido com score de sentimento, tópicos-chave e impacto esperado, entregando contexto no mesmo payload.',
-      p2_bullets: [ 'Fatos relevantes de companhias abertas', 'Resultados trimestrais e anuais (ITR, DFP)', 'Transações de insiders e controladores (CVM 44)', 'Documentos de ofertas, follow-ons e M&A', 'Avisos aos acionistas e comunicados ao mercado', 'Monitoramento contínuo com alerta em tempo real', 'Score de sentimento e tópicos-chave (diferencial único)' ],
+      p2_bullets: [ 'Fatos relevantes de companhias abertas', 'Resultados trimestrais e anuais (ITR, DFP)', 'Transações de insiders e controladores (CVM 44)', 'Documentos de ofertas, follow-ons e M&A', 'Avisos aos acionistas e comunicados ao mercado', 'Monitoramento contínuo com alerta em tempo real', 'Score de sentimento de documentos' ],
       p2_example: {
         tagline: 'A API não devolve só o documento. Devolve interpretação.',
         header: 'PETR4 · 09:42 · FATO RELEVANTE',
@@ -382,7 +382,7 @@ export const dict = {
       p2_title: 'Documentos oficiales CVM via API',
       p2_chip: 'Score propietario',
       p2_desc: 'Además de las noticias, la API entrega integración directa con documentos oficiales protocolados en la CVM. Hechos relevantes, resultados, transacciones de insiders (CVM 44) y eventos societarios, estructurados y listos para consumo programático. Cada documento también es enriquecido con score de sentimiento, tópicos clave e impacto esperado, entregando contexto en el mismo payload.',
-      p2_bullets: ['Hechos relevantes de compañías abiertas', 'Resultados trimestrales y anuales (ITR, DFP)', 'Transacciones de insiders y controladores (CVM 44)', 'Documentos de ofertas, follow-ons y M&A', 'Avisos a accionistas y comunicados al mercado', 'Monitoreo continuo con alerta en tiempo real', 'Score de sentimiento y tópicos clave (diferencial único)'],
+      p2_bullets: ['Hechos relevantes de compañías abiertas', 'Resultados trimestrales y anuales (ITR, DFP)', 'Transacciones de insiders y controladores (CVM 44)', 'Documentos de ofertas, follow-ons y M&A', 'Avisos a accionistas y comunicados al mercado', 'Monitoreo continuo con alerta en tiempo real', 'Score de sentimiento de documentos'],
       p2_example: {
         tagline: 'La API no devuelve solo el documento. Devuelve interpretación.',
         header: 'PETR4 · 09:42 · HECHO RELEVANTE',
